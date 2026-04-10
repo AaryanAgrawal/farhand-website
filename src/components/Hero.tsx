@@ -36,7 +36,7 @@ export default function Hero() {
           width: '100%',
           height: '100%',
           objectFit: 'cover',
-          opacity: 0.3, 
+          opacity: 1, 
           zIndex: 0
         }}
       >
