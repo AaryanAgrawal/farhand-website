@@ -5,77 +5,84 @@ import { motion } from 'framer-motion';
 
 export default function Footer() {
   return (
-    <footer 
-      style={{
-        padding: '10rem 2rem 4rem',
-        background: '#000',
-        color: '#fff',
-        textAlign: 'center'
-      }}
-    >
+    <footer className="section-padding" style={{ paddingBottom: '3rem', background: 'var(--background)' }}>
       <div className="container">
+        
+        {/* Main CTA block */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1 }}
-          viewport={{ once: true }}
-          style={{ marginBottom: '8rem' }}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true, margin: "-50px" }}
+          style={{ textAlign: 'center', marginBottom: '8rem' }}
         >
-          <h2 style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)', marginBottom: '3rem', lineHeight: 1 }}>
-            YOU DON’T NEED A <br/> FIELD SUPPORT TEAM. <br/> YOU NEED FIELD SERVICE DONE.
-          </h2>
-          
-          <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <motion.a
-              href="mailto:aaryan@farhand.live"
-              whileHover={{ scale: 1.05 }}
-              style={{
-                background: '#fff',
-                color: '#000',
-                padding: '1.25rem 3rem',
-                fontSize: '1.125rem',
-                fontWeight: 800,
-                textTransform: 'uppercase'
-              }}
-            >
-              Email Us
-            </motion.a>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              style={{
-                border: '1px solid #fff',
-                color: '#fff',
-                padding: '1.25rem 3rem',
-                fontSize: '1.125rem',
-                fontWeight: 800,
-                textTransform: 'uppercase'
-              }}
-            >
-              Schedule a Call
-            </motion.button>
+          <h3 style={{ fontSize: 'clamp(1.5rem, 3vw, 28px)', marginBottom: '4rem', lineHeight: 1.4 }}>
+            You don't need a field support team. <br/>
+            You need field service <span className="text-accent">done.</span>
+          </h3>
+
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3rem' }}>
+            <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'center', gap: '4rem', flexWrap: 'wrap' }}>
+              <div style={{ textAlign: 'left' }}>
+                <p style={{ fontSize: '12px', fontFamily: 'var(--font-inter)', fontWeight: 500, color: '#888', marginBottom: '0.5rem' }}>
+                  Email
+                </p>
+                <p style={{ fontSize: '18px', color: 'var(--light-gray)', margin: 0, lineHeight: 1.5 }}>
+                  aaryan@farhand.live<br/>
+                  (857) 498-9778
+                </p>
+              </div>
+
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                style={{
+                  background: '#000',
+                  border: '1px solid rgba(255,255,255,0.2)',
+                  color: '#fff',
+                  padding: '1rem 2rem',
+                  borderRadius: '9999px',
+                  fontFamily: 'var(--font-inter)',
+                  fontSize: '14px',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  alignSelf: 'center',
+                  transition: 'background 0.3s'
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,0.05)')}
+                onMouseLeave={(e) => (e.currentTarget.style.background = '#000')}
+              >
+                Schedule a call
+              </motion.button>
+            </div>
           </div>
         </motion.div>
 
+        {/* Bottom Bar */}
         <div style={{ 
           display: 'flex', 
           justifyContent: 'space-between', 
           alignItems: 'flex-end',
-          paddingTop: '4rem',
-          borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+          borderTop: '1px solid var(--border-color)',
+          paddingTop: '2rem',
           flexWrap: 'wrap',
-          gap: '2rem',
-          textAlign: 'left'
+          gap: '2rem'
         }}>
           <div>
-            <div style={{ fontSize: '1.5rem', fontWeight: 900, marginBottom: '1rem' }}>FARHAND</div>
-            <p style={{ color: 'var(--secondary)', textTransform: 'uppercase', fontWeight: 600, maxWidth: '300px' }}>
-              Designed by SF-based roboticists. <br/> For robots out in the field.
+            <p style={{ fontSize: '16px', color: 'var(--light-gray)', marginBottom: '1rem' }}>
+              Your field support partner
             </p>
+            <a href="#" style={{ fontSize: '16px', color: 'var(--light-gray)', textDecoration: 'underline', textDecorationColor: 'rgba(255,255,255,0.3)' }}>
+              Terms & Privacy
+            </a>
           </div>
-          <div style={{ color: 'var(--secondary)', textTransform: 'uppercase', fontWeight: 600, fontSize: '0.875rem' }}>
-            © 2026 FARHAND INC. ALL RIGHTS RESERVED.
-          </div>
+
+          <p style={{ fontSize: '18px', color: 'var(--light-gray)', textAlign: 'right', margin: 0 }}>
+            Designed by SF-based roboticists<br/>
+            For robots out in the field
+          </p>
         </div>
+
       </div>
     </footer>
   );
