@@ -9,7 +9,9 @@ export default function Home() {
     <main style={{ background: '#000', minHeight: '100vh' }}>
       <Navigation />
       <Hero />
-      <Problem />
+      <div id="problem">
+        <Problem />
+      </div>
       <Relay />
       <Footer />
     </main>

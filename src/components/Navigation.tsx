@@ -33,6 +33,9 @@ export default function Navigation() {
         </Link>
         
         <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
+          <Link href="/#relay" style={{ color: 'var(--light-gray)', fontSize: '15px', fontWeight: 500 }}>
+            Relay™
+          </Link>
           <motion.a
             href="#schedule"
             whileHover={{ scale: 1.05 }}

@@ -2,11 +2,21 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { TrendingUp, Clock, UserCheck } from 'lucide-react';
 
 const problems = [
-  "Travelling or regional technicians don't scale",
-  "Outsourced service contracts are slow and expensive",
-  "Only your senior guy knows some repairs"
+  {
+    text: "Travelling or regional technicians don't scale",
+    icon: <TrendingUp size={24} className="text-accent" />
+  },
+  {
+    text: "Outsourced service contracts are slow and expensive",
+    icon: <Clock size={24} className="text-accent" />
+  },
+  {
+    text: "Only your senior guy knows some repairs",
+    icon: <UserCheck size={24} className="text-accent" />
+  }
 ];
 
 export default function Problem() {
@@ -40,12 +50,17 @@ export default function Problem() {
               className="card-glass"
               style={{
                 display: 'flex',
+                flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
                 textAlign: 'center',
-                minHeight: '120px'
+                gap: '1.5rem',
+                minHeight: '200px'
               }}
             >
+              <div style={{ padding: '1rem', background: 'rgba(26, 255, 103, 0.05)', borderRadius: '12px' }}>
+                {problem.icon}
+              </div>
               <p style={{ 
                 fontSize: 'clamp(18px, 2.5vw, 20px)', 
                 fontWeight: 500, 
@@ -53,7 +68,7 @@ export default function Problem() {
                 margin: 0,
                 lineHeight: 1.4
               }}>
-                {problem}
+                {problem.text}
               </p>
             </motion.div>
           ))}

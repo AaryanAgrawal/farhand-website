@@ -2,25 +2,29 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Brain, MapPin, BarChart } from 'lucide-react';
 
 const steps = [
   {
     title: "Learns",
-    desc: "your documentation"
+    desc: "your documentation",
+    icon: <Brain size={28} className="text-accent" />
   },
   {
     title: "Guides",
-    desc: "technicians during repairs"
+    desc: "technicians during repairs",
+    icon: <MapPin size={28} className="text-accent" />
   },
   {
     title: "Improves",
-    desc: "by text and voice debriefs"
+    desc: "by text and voice debriefs",
+    icon: <BarChart size={28} className="text-accent" />
   }
 ];
 
 export default function Relay() {
   return (
-    <section className="section-padding" style={{ background: '#050505', borderTop: '1px solid var(--border-color)', borderBottom: '1px solid var(--border-color)' }}>
+    <section id="relay" className="section-padding" style={{ background: '#050505', borderTop: '1px solid var(--border-color)', borderBottom: '1px solid var(--border-color)' }}>
       <div className="container" style={{ textAlign: 'center' }}>
         
         {/* The Solution Introduction */}
@@ -70,9 +74,12 @@ export default function Relay() {
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'center',
-                  minHeight: '160px'
+                  minHeight: '200px',
+                  position: 'relative',
+                  overflow: 'hidden'
                 }}
               >
+                <div style={{ marginBottom: '1.5rem' }}>{step.icon}</div>
                 <p style={{ fontSize: 'clamp(20px, 3vw, 22px)', fontWeight: 500, color: 'var(--foreground)', marginBottom: '0.8rem' }}>
                   {step.title}
                 </p>
@@ -82,6 +89,24 @@ export default function Relay() {
               </motion.div>
             ))}
           </div>
+
+          {/* Additional Platform Interface Placeholder */}
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 1, ease: [0.19, 1, 0.22, 1] }}
+            viewport={{ once: true }}
+            style={{
+              marginTop: '4rem',
+              maxWidth: '1000px',
+              margin: '4rem auto 0',
+              height: '500px',
+              background: 'url(/screenshot2.png) center center / cover no-repeat',
+              borderRadius: '24px',
+              border: '1px solid rgba(255,255,255,0.1)',
+              boxShadow: '0 20px 40px rgba(0,0,0,0.5)'
+            }}
+          />
         </motion.div>
 
       </div>

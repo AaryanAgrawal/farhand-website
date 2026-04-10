@@ -62,7 +62,7 @@ export default function Hero() {
           transition={{ delay: 0.3, duration: 1 }}
           style={{
             maxWidth: '850px',
-            marginBottom: 'clamp(2rem, 8vw, 3.5rem)',
+            marginBottom: '3rem',
             textShadow: '0 4px 20px rgba(0,0,0,0.8)',
             color: 'var(--light-gray)',
             fontWeight: 400
@@ -71,20 +71,60 @@ export default function Hero() {
           Our AI-guided technicians install & service your robots & machinery at your client sites.
         </motion.h2>
 
-        <motion.a
-          href="#schedule"
-          initial={{ opacity: 0, scale: 0.98 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.5, duration: 0.8 }}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.98 }}
-          className="btn-primary"
-        >
-          Deploy smarter
-        </motion.a>
+        <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+          <motion.a
+            href="#schedule"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.5, duration: 0.8 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.98 }}
+            className="btn-primary"
+          >
+            Deploy smarter
+          </motion.a>
+          
+          <motion.a
+            href="#relay"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+            whileHover={{ background: 'rgba(255,255,255,0.05)', borderColor: '#fff' }}
+            style={{
+              padding: '0.8rem 2.2rem',
+              borderRadius: '9999px',
+              border: '1px solid rgba(255,255,255,0.2)',
+              fontSize: '18px',
+              fontWeight: 500,
+              color: '#fff',
+              transition: 'all 0.3s'
+            }}
+          >
+            Explore Relay™
+          </motion.a>
+        </div>
       </div>
 
-      {/* Scroll indicator - hidden on very small screens to save space */}
+      {/* Product Placeholder Image */}
+      <motion.div
+        initial={{ opacity: 0, y: 100 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.8, duration: 1.2 }}
+        style={{
+          position: 'absolute',
+          bottom: '-10%',
+          width: '80%',
+          maxWidth: '1200px',
+          height: '400px',
+          background: 'url(/screenshot1.png) center top / cover no-repeat',
+          border: '1px solid rgba(26, 255, 103, 0.2)',
+          borderBottom: 'none',
+          borderRadius: '40px 40px 0 0',
+          zIndex: 0,
+          boxShadow: '0 -20px 60px rgba(0,0,0,0.5)'
+        }}
+      />
+
       <motion.div 
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
@@ -94,8 +134,8 @@ export default function Hero() {
           width: '1px',
           height: '40px',
           background: 'linear-gradient(to bottom, var(--accent-green), transparent)',
-          opacity: 0.6,
-          display: 'block'
+          opacity: 0.4,
+          zIndex: 1
         }}
       />
     </section>

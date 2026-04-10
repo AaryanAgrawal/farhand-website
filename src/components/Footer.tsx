@@ -2,7 +2,9 @@
 
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 import Cal, { getCalApi } from "@calcom/embed-react";
+import { FaLinkedin, FaTwitter, FaGithub } from 'react-icons/fa';
 
 export default function Footer() {
   useEffect(() => {
@@ -55,23 +57,33 @@ export default function Footer() {
           </div>
         </motion.div>
 
-        {/* Contact info cards */}
-        <div style={{ display: 'flex', justifyContent: 'center', gap: 'clamp(1.5rem, 5vw, 3rem)', flexWrap: 'wrap', marginBottom: 'clamp(5rem, 15vw, 8rem)' }}>
-           <div style={{ textAlign: 'center' }}>
-            <p style={{ fontSize: '11px', fontWeight: 600, color: '#555', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.5rem' }}>
+        {/* Contact info and Socials */}
+        <div style={{ display: 'flex', justifyContent: 'center', gap: 'clamp(2rem, 10vw, 5rem)', flexWrap: 'wrap', marginBottom: 'clamp(5rem, 15vw, 8rem)', textAlign: 'center' }}>
+           <div>
+            <p style={{ fontSize: '11px', fontWeight: 600, color: '#555', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.75rem' }}>
               Email
             </p>
             <p style={{ fontSize: 'clamp(18px, 2.5vw, 20px)', color: 'var(--foreground)', margin: 0, fontWeight: 500 }}>
               aaryan@farhand.live
             </p>
           </div>
-          <div style={{ textAlign: 'center' }}>
-            <p style={{ fontSize: '11px', fontWeight: 600, color: '#555', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.5rem' }}>
+          <div>
+            <p style={{ fontSize: '11px', fontWeight: 600, color: '#555', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.75rem' }}>
               Direct
             </p>
             <p style={{ fontSize: 'clamp(18px, 2.5vw, 20px)', color: 'var(--foreground)', margin: 0, fontWeight: 500 }}>
               (857) 498-9778
             </p>
+          </div>
+          <div>
+            <p style={{ fontSize: '11px', fontWeight: 600, color: '#555', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.75rem' }}>
+              Social
+            </p>
+            <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'center' }}>
+              <motion.a whileHover={{ color: 'var(--accent-green)' }} href="#" style={{ color: 'var(--light-gray)' }}><FaLinkedin size={20}/></motion.a>
+              <motion.a whileHover={{ color: 'var(--accent-green)' }} href="#" style={{ color: 'var(--light-gray)' }}><FaTwitter size={20}/></motion.a>
+              <motion.a whileHover={{ color: 'var(--accent-green)' }} href="#" style={{ color: 'var(--light-gray)' }}><FaGithub size={20}/></motion.a>
+            </div>
           </div>
         </div>
 
@@ -91,9 +103,13 @@ export default function Footer() {
               alt="Farhand Logo" 
               style={{ height: '22px', filter: 'invert(1)', opacity: 0.8, marginBottom: '1rem' }} 
             />
-            <p style={{ fontSize: '13px', color: 'var(--light-gray)', opacity: 0.5, maxWidth: '250px', lineHeight: 1.5 }}>
+            <p style={{ fontSize: '13px', color: 'var(--light-gray)', opacity: 0.5, maxWidth: '250px', lineHeight: 1.5, marginBottom: '1rem' }}>
               The infrastructure for the next generation of industrial automation.
             </p>
+            <div style={{ display: 'flex', gap: '1.5rem' }}>
+              <Link href="/terms" style={{ fontSize: '13px', color: 'var(--light-gray)', opacity: 0.5, textDecoration: 'underline' }}>Terms</Link>
+              <Link href="/privacy" style={{ fontSize: '13px', color: 'var(--light-gray)', opacity: 0.5, textDecoration: 'underline' }}>Privacy</Link>
+            </div>
           </div>
 
           <div style={{ textAlign: 'right' }}>
