@@ -19,8 +19,8 @@ export default function Problem() {
           transition={{ duration: 1, ease: [0.19, 1, 0.22, 1] }}
           viewport={{ once: true, margin: "-100px" }}
           style={{ 
-            fontSize: 'clamp(1.5rem, 3.5vw, 32px)', 
-            marginBottom: '6rem',
+            fontSize: 'clamp(1.5rem, 5vw, 32px)', 
+            marginBottom: 'clamp(3rem, 10vw, 6rem)',
             color: 'var(--foreground)',
             lineHeight: 1.3,
             fontWeight: 400
@@ -43,11 +43,11 @@ export default function Problem() {
                 alignItems: 'center',
                 justifyContent: 'center',
                 textAlign: 'center',
-                minHeight: '160px'
+                minHeight: '120px'
               }}
             >
               <p style={{ 
-                fontSize: '20px', 
+                fontSize: 'clamp(18px, 2.5vw, 20px)', 
                 fontWeight: 500, 
                 color: 'var(--foreground)',
                 margin: 0,

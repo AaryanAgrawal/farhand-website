@@ -29,15 +29,15 @@ export default function Relay() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: [0.19, 1, 0.22, 1] }}
           viewport={{ once: true, margin: "-100px" }}
-          style={{ marginBottom: '10rem' }}
+          style={{ marginBottom: 'clamp(5rem, 15vw, 10rem)' }}
         >
-          <p style={{ fontSize: '18px', color: 'var(--light-gray)', marginBottom: '1.5rem', fontWeight: 400 }}>
+          <p style={{ fontSize: 'clamp(16px, 2vw, 18px)', color: 'var(--light-gray)', marginBottom: '1.5rem', fontWeight: 400 }}>
             There's a <span className="text-accent" style={{ fontWeight: 600 }}>better</span> model
           </p>
           <h3 style={{ maxWidth: '850px', margin: '0 auto 1.5rem', fontWeight: 300, lineHeight: 1.45 }}>
             On-demand technicians guided by AI to service your machines like your own guys
           </h3>
-          <p style={{ fontSize: '18px', color: 'var(--light-gray)', opacity: 0.8 }}>
+          <p style={{ fontSize: 'clamp(16px, 2vw, 18px)', color: 'var(--light-gray)', opacity: 0.8 }}>
             Every zip code in the US
           </p>
         </motion.div>
@@ -48,12 +48,12 @@ export default function Relay() {
           whileInView={{ opacity: 1 }}
           transition={{ duration: 1.2 }}
           viewport={{ once: true }}
-          style={{ paddingBottom: '4rem' }}
+          style={{ paddingBottom: '2rem' }}
         >
-          <h3 style={{ fontSize: '38px', marginBottom: '1rem', fontWeight: 300 }}>
+          <h3 style={{ fontSize: 'clamp(28px, 5vw, 38px)', marginBottom: '1rem', fontWeight: 300 }}>
             Farhand Relay™
           </h3>
-          <p style={{ fontSize: '18px', fontWeight: 300, color: 'var(--light-gray)', marginBottom: '6rem', opacity: 0.7 }}>
+          <p style={{ fontSize: 'clamp(16px, 2vw, 18px)', fontWeight: 300, color: 'var(--light-gray)', marginBottom: 'clamp(3rem, 10vw, 6rem)', opacity: 0.7 }}>
             Our AI platform that becomes your senior technician.
           </p>
 
@@ -70,13 +70,13 @@ export default function Relay() {
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'center',
-                  minHeight: '180px'
+                  minHeight: '160px'
                 }}
               >
-                <p style={{ fontSize: '22px', fontWeight: 500, color: 'var(--foreground)', marginBottom: '0.8rem' }}>
+                <p style={{ fontSize: 'clamp(20px, 3vw, 22px)', fontWeight: 500, color: 'var(--foreground)', marginBottom: '0.8rem' }}>
                   {step.title}
                 </p>
-                <p style={{ fontSize: '16px', color: 'var(--light-gray)', margin: 0, lineHeight: 1.5 }}>
+                <p style={{ fontSize: 'clamp(15px, 2vw, 16px)', color: 'var(--light-gray)', margin: 0, lineHeight: 1.5 }}>
                   {step.desc}
                 </p>
               </motion.div>

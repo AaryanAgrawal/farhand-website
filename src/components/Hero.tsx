@@ -11,19 +11,19 @@ export default function Hero() {
   return (
     <section 
       style={{
-        height: '100vh',
+        minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: '0 1.5rem',
+        padding: '0',
         textAlign: 'center',
         position: 'relative',
         overflow: 'hidden',
         background: '#000'
       }}
     >
-      {/* Video Background with exact opacity from original */}
+      {/* Video Background */}
       <video
         autoPlay
         muted
@@ -44,7 +44,7 @@ export default function Hero() {
       </video>
 
       {/* Content Overlay */}
-      <div style={{ zIndex: 1, position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <div className="container" style={{ zIndex: 1, position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <motion.div style={{ y: y1, opacity }} transition={{ duration: 1, ease: [0.19, 1, 0.22, 1] }}>
           <h1 style={{ 
             marginBottom: '1.5rem', 
@@ -62,7 +62,7 @@ export default function Hero() {
           transition={{ delay: 0.3, duration: 1 }}
           style={{
             maxWidth: '850px',
-            marginBottom: '3.5rem',
+            marginBottom: 'clamp(2rem, 8vw, 3.5rem)',
             textShadow: '0 4px 20px rgba(0,0,0,0.8)',
             color: 'var(--light-gray)',
             fontWeight: 400
@@ -84,7 +84,7 @@ export default function Hero() {
         </motion.a>
       </div>
 
-      {/* Scroll indicator */}
+      {/* Scroll indicator - hidden on very small screens to save space */}
       <motion.div 
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
@@ -94,7 +94,8 @@ export default function Hero() {
           width: '1px',
           height: '40px',
           background: 'linear-gradient(to bottom, var(--accent-green), transparent)',
-          opacity: 0.6
+          opacity: 0.6,
+          display: 'block'
         }}
       />
     </section>
