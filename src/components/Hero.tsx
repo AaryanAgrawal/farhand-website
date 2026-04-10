@@ -89,16 +89,9 @@ export default function Hero() {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.6, duration: 0.8 }}
-            whileHover={{ background: 'rgba(255,255,255,0.05)', borderColor: '#fff' }}
-            style={{
-              padding: '0.8rem 2.2rem',
-              borderRadius: '9999px',
-              border: '1px solid rgba(255,255,255,0.2)',
-              fontSize: '18px',
-              fontWeight: 500,
-              color: '#fff',
-              transition: 'all 0.3s'
-            }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.98 }}
+            className="btn-outline"
           >
             Explore Relay™
           </motion.a>

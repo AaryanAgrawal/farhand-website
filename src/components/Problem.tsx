@@ -7,15 +7,15 @@ import { TrendingUp, Clock, UserCheck } from 'lucide-react';
 const problems = [
   {
     text: "Travelling or regional technicians don't scale",
-    icon: <TrendingUp size={24} className="text-accent" />
+    icon: <TrendingUp size={24} style={{ color: 'var(--accent-red)' }} />
   },
   {
     text: "Outsourced service contracts are slow and expensive",
-    icon: <Clock size={24} className="text-accent" />
+    icon: <Clock size={24} style={{ color: 'var(--accent-red)' }} />
   },
   {
     text: "Only your senior guy knows some repairs",
-    icon: <UserCheck size={24} className="text-accent" />
+    icon: <UserCheck size={24} style={{ color: 'var(--accent-red)' }} />
   }
 ];
 
@@ -31,7 +31,7 @@ export default function Problem() {
           style={{ 
             fontSize: 'clamp(1.5rem, 5vw, 32px)', 
             marginBottom: 'clamp(3rem, 10vw, 6rem)',
-            color: 'var(--foreground)',
+            color: 'var(--accent-red)',
             lineHeight: 1.3,
             fontWeight: 400
           }}
@@ -55,10 +55,11 @@ export default function Problem() {
                 justifyContent: 'center',
                 textAlign: 'center',
                 gap: '1.5rem',
-                minHeight: '200px'
+                minHeight: '200px',
+                borderColor: 'rgba(255, 59, 48, 0.2)'
               }}
             >
-              <div style={{ padding: '1rem', background: 'rgba(26, 255, 103, 0.05)', borderRadius: '12px' }}>
+              <div style={{ padding: '1rem', background: 'rgba(255, 59, 48, 0.05)', borderRadius: '12px' }}>
                 {problem.icon}
               </div>
               <p style={{ 
