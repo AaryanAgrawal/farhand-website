@@ -41,11 +41,11 @@ export default function Problem() {
                 alignItems: 'center',
                 justifyContent: 'center',
                 textAlign: 'center',
-                minHeight: '160px',
+                minHeight: '140px',
               }}
             >
               <p style={{
-                fontSize: 'clamp(18px, 2.5vw, 20px)',
+                fontSize: 'clamp(20px, 3vw, 24px)',
                 fontWeight: 500,
                 color: 'var(--foreground)',
                 margin: 0,

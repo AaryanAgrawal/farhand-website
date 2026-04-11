@@ -16,11 +16,14 @@ export default function Navigation() {
         left: 0,
         right: 0,
         zIndex: 100,
-        padding: '1.5rem 0',
+        padding: '1.2rem 0',
+        background: 'rgba(0,0,0,0.85)',
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
       }}
     >
       <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <Link href="/" style={{ display: 'flex', alignItems: 'center', minHeight: '44px' }}>
           <img
             src="/logo-w-type-dark.png"
             alt="Farhand Logo"
@@ -36,7 +39,10 @@ export default function Navigation() {
             fontSize: '18px',
             fontWeight: 400,
             textDecoration: 'none',
-            padding: '16px 24px',
+            padding: '10px 20px',
+            minHeight: '44px',
+            display: 'flex',
+            alignItems: 'center',
           }}
         >
           Schedule a Call

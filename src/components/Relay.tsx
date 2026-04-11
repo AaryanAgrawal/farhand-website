@@ -26,16 +26,16 @@ export default function Relay() {
             border: '1px solid var(--border-color)',
             borderRadius: '30px',
             maxWidth: '900px',
-            margin: '0 auto clamp(5rem, 15vw, 10rem)',
+            margin: '0 auto clamp(3rem, 8vw, 5rem)',
           }}
         >
-          <p style={{ fontSize: 'clamp(14px, 2vw, 16px)', color: 'var(--light-gray)', marginBottom: '1.5rem', fontWeight: 400, opacity: 0.7 }}>
+          <p style={{ fontSize: 'clamp(16px, 2vw, 18px)', color: 'var(--light-gray)', marginBottom: '1.5rem', fontWeight: 400, opacity: 0.9 }}>
             There&apos;s a better model
           </p>
           <h3 style={{ maxWidth: '750px', margin: '0 auto 1.5rem', fontWeight: 300, lineHeight: 1.45 }}>
             <strong>On-demand technicians guided by AI to service your machines like your own guys</strong>
           </h3>
-          <p style={{ fontSize: 'clamp(14px, 2vw, 16px)', color: 'var(--light-gray)', opacity: 0.6 }}>
+          <p style={{ fontSize: 'clamp(16px, 2vw, 18px)', color: 'var(--light-gray)', opacity: 0.8 }}>
             Every zip code in the US
           </p>
         </motion.div>
@@ -50,7 +50,7 @@ export default function Relay() {
           <h3 style={{ fontSize: 'clamp(28px, 5vw, 34px)', marginBottom: '0.5rem', fontWeight: 300 }}>
             Farhand <strong>Relay</strong>&#8482;
           </h3>
-          <p style={{ fontSize: 'clamp(16px, 2vw, 18px)', fontWeight: 400, color: 'var(--light-gray)', marginBottom: 'clamp(3rem, 10vw, 5rem)', opacity: 0.7 }}>
+          <p style={{ fontSize: 'clamp(16px, 2vw, 18px)', fontWeight: 400, color: 'var(--light-gray)', marginBottom: 'clamp(2rem, 6vw, 3rem)', opacity: 0.8 }}>
             <strong>Our AI platform that becomes your senior technician.</strong>
           </p>
 
@@ -87,7 +87,7 @@ export default function Relay() {
                 <p style={{ fontSize: 'clamp(20px, 3vw, 22px)', fontWeight: 500, color: 'var(--foreground)', marginBottom: '0.5rem' }}>
                   {step.title}
                 </p>
-                <p style={{ fontSize: 'clamp(15px, 2vw, 16px)', color: 'var(--light-gray)', margin: 0, lineHeight: 1.5, opacity: 0.8 }}>
+                <p style={{ fontSize: 'clamp(16px, 2vw, 18px)', color: 'var(--light-gray)', margin: 0, lineHeight: 1.5, opacity: 0.9 }}>
                   {step.desc}
                 </p>
               </motion.div>
