@@ -35,6 +35,7 @@ interface Env {
   MEDIUM_TOKEN?: string;
   TUMBLR_TOKEN?: string;
   TUMBLR_BLOG_NAME?: string;
+  TELEGRAPH_ACCESS_TOKEN?: string;
 }
 
 function loadEnv(): Env {
@@ -294,6 +295,74 @@ async function syndicateToMedium(title: string, markdown: string, canonical: str
   return (await res.json()).data.url;
 }
 
+async function syndicateToTelegraph(title: string, markdown: string, canonical: string, token: string): Promise<string> {
+  // Convert markdown to Telegraph node format
+  const nodes = markdownToTelegraphNodes(markdown, canonical);
+  const body = new URLSearchParams();
+  body.append('access_token', token);
+  body.append('title', title);
+  body.append('content', JSON.stringify(nodes));
+  body.append('author_name', 'Farhand Robotics');
+  body.append('author_url', 'https://farhand.live');
+  body.append('return_content', 'false');
+
+  const res = await fetch('https://api.telegra.ph/createPage', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body,
+  });
+  if (!res.ok) throw new Error(`Telegraph: ${res.status}`);
+  const data = await res.json();
+  if (!data.ok) throw new Error(`Telegraph: ${data.error}`);
+  return data.result.url;
+}
+
+function markdownToTelegraphNodes(markdown: string, canonical: string): any[] {
+  const nodes: any[] = [];
+  const lines = markdown.split('\n');
+  let paragraph: string[] = [];
+
+  const flushParagraph = () => {
+    if (paragraph.length > 0) {
+      const text = paragraph.join(' ').trim();
+      if (text) nodes.push({ tag: 'p', children: [parseInline(text)] });
+      paragraph = [];
+    }
+  };
+
+  const parseInline = (text: string): any => {
+    // Simple: strip markdown formatting for Telegraph (it supports limited tags)
+    return text.replace(/\*\*(.*?)\*\*/g, '$1').replace(/\*(.*?)\*/g, '$1').replace(/\[(.*?)\]\(.*?\)/g, '$1');
+  };
+
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (!trimmed) {
+      flushParagraph();
+      continue;
+    }
+    if (trimmed.startsWith('## ')) {
+      flushParagraph();
+      nodes.push({ tag: 'h3', children: [trimmed.slice(3)] });
+    } else if (trimmed.startsWith('# ')) {
+      flushParagraph();
+      nodes.push({ tag: 'h3', children: [trimmed.slice(2)] });
+    } else if (trimmed.startsWith('---')) {
+      flushParagraph();
+    } else {
+      paragraph.push(trimmed);
+    }
+  }
+  flushParagraph();
+
+  // Always append canonical link
+  nodes.push({
+    tag: 'p',
+    children: ['Originally published at ', { tag: 'a', attrs: { href: canonical }, children: [canonical] }],
+  });
+  return nodes;
+}
+
 async function syndicateToTumblr(title: string, markdown: string, canonical: string, env: Env): Promise<string> {
   const res = await fetch(`https://api.tumblr.com/v2/blog/${env.TUMBLR_BLOG_NAME}/post`, {
     method: 'POST',
@@ -319,6 +388,7 @@ async function syndicateArticle(record: ArticleRecord, env: Env) {
   const platforms = [
     { name: 'Dev.to', fn: () => syndicateToDevTo(title, markdown, canonical, tags, env.DEVTO_API_KEY!), ok: !!env.DEVTO_API_KEY },
     { name: 'Hashnode', fn: () => syndicateToHashnode(title, markdown, canonical, env.HASHNODE_TOKEN!, env.HASHNODE_PUBLICATION_ID!), ok: !!env.HASHNODE_TOKEN && !!env.HASHNODE_PUBLICATION_ID },
+    { name: 'Telegraph', fn: () => syndicateToTelegraph(title, markdown, canonical, env.TELEGRAPH_ACCESS_TOKEN!), ok: !!env.TELEGRAPH_ACCESS_TOKEN },
     { name: 'Tumblr', fn: () => syndicateToTumblr(title, markdown, canonical, env), ok: !!env.TUMBLR_TOKEN && !!env.TUMBLR_BLOG_NAME },
   ];
 
