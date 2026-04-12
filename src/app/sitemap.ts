@@ -43,6 +43,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     'remote-resolution-field-service',
     'knowledge-preservation-field-service',
     'first-time-fix-rate-ai',
+    'field-service-roi-calculator',
+    'fanuc-robot-maintenance-checklist',
+    'industrial-robot-downtime-cost',
+    'predictive-vs-preventive-maintenance',
+    'remote-diagnostics-field-service',
+    'oem-field-service-scaling',
+    'field-service-knowledge-management',
+    'reduce-truck-rolls-ai',
+    'field-service-trends-2026',
+    'cobot-maintenance-guide',
   ];
 
   return [
