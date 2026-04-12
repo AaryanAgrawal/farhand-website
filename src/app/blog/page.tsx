@@ -1,6 +1,7 @@
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import FAQSection from '@/components/FAQSection';
+import NewsletterSignup from '@/components/NewsletterSignup';
 import Link from 'next/link';
 import { coreFaqs } from '@/data/faqs';
 
@@ -157,6 +158,8 @@ export default function BlogPage() {
           ))}
         </div>
       </section>
+
+      <NewsletterSignup />
 
       <FAQSection faqs={coreFaqs} subtitle="Everything you need to know about AI-guided field service." />
 

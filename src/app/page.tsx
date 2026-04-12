@@ -4,6 +4,7 @@ import Problem from '@/components/Problem';
 import Relay from '@/components/Relay';
 import FAQSection from '@/components/FAQSection';
 import Footer from '@/components/Footer';
+import NewsletterSignup from '@/components/NewsletterSignup';
 import { coreFaqs } from '@/data/faqs';
 
 export default function Home() {
@@ -19,6 +20,7 @@ export default function Home() {
         faqs={coreFaqs}
         subtitle="Everything you need to know about AI-guided field service."
       />
+      <NewsletterSignup />
       <Footer />
     </main>
   );
