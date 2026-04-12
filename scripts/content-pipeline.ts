@@ -250,7 +250,7 @@ export default function Post() {
 }
 
 // ── Syndication ───────────────────────────────────────────────────────
-async function syndicateToDevTo(title: string, markdown: string, canonical: string, tags: string[], apiKey: string): Promise<string> {
+async function syndicateToDevTo(title: string, markdown: string, canonical: string, tags: string[], apiKey: string, retries = 2): Promise<string> {
   const res = await fetch('https://dev.to/api/articles', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'api-key': apiKey },
@@ -258,6 +258,14 @@ async function syndicateToDevTo(title: string, markdown: string, canonical: stri
       article: { title, body_markdown: markdown, published: true, canonical_url: canonical, tags: tags.slice(0, 4) },
     }),
   });
+  if (res.status === 429 && retries > 0) {
+    const body = await res.text();
+    const waitMatch = body.match(/try again in (\d+)/);
+    const wait = waitMatch ? parseInt(waitMatch[1]) : 300;
+    console.log(`    ⏸  Rate limited — waiting ${wait}s then retrying...`);
+    await new Promise(r => setTimeout(r, (wait + 5) * 1000));
+    return syndicateToDevTo(title, markdown, canonical, tags, apiKey, retries - 1);
+  }
   if (!res.ok) throw new Error(`Dev.to: ${res.status} ${await res.text()}`);
   return (await res.json()).url;
 }
@@ -307,14 +315,15 @@ async function syndicateArticle(record: ArticleRecord, env: Env) {
   const title = record.title || record.keyword;
   const results: string[] = [];
 
+  const already = new Set(record.syndicatedTo || []);
   const platforms = [
     { name: 'Dev.to', fn: () => syndicateToDevTo(title, markdown, canonical, tags, env.DEVTO_API_KEY!), ok: !!env.DEVTO_API_KEY },
-    { name: 'Hashnode', fn: () => syndicateToHashnode(title, markdown, canonical, env.HASHNODE_TOKEN!, env.HASHNODE_PUBLICATION_ID!), ok: !!env.HASHNODE_TOKEN },
-    { name: 'Medium', fn: () => syndicateToMedium(title, markdown, canonical, env.MEDIUM_TOKEN!), ok: !!env.MEDIUM_TOKEN },
-    { name: 'Tumblr', fn: () => syndicateToTumblr(title, markdown, canonical, env), ok: !!env.TUMBLR_TOKEN },
+    { name: 'Hashnode', fn: () => syndicateToHashnode(title, markdown, canonical, env.HASHNODE_TOKEN!, env.HASHNODE_PUBLICATION_ID!), ok: !!env.HASHNODE_TOKEN && !!env.HASHNODE_PUBLICATION_ID },
+    { name: 'Tumblr', fn: () => syndicateToTumblr(title, markdown, canonical, env), ok: !!env.TUMBLR_TOKEN && !!env.TUMBLR_BLOG_NAME },
   ];
 
   for (const p of platforms) {
+    if (already.has(p.name)) { console.log(`  ⏭  ${p.name} — already published`); continue; }
     if (!p.ok) { console.log(`  ⏭  ${p.name} — no key`); continue; }
     try {
       const url = await p.fn();
@@ -336,6 +345,7 @@ async function main() {
     console.log(`
 📡 Farhand Content Pipeline
 
+  seed-existing                    Seed DB with 5 hand-written blog posts (ready to syndicate)
   generate-keywords                Generate keyword CSV (${MACHINE_TYPES.length} types × ${TOP_CITIES.length} cities + topical)
   generate <keyword>               Generate one article via KoalaWriter
   generate-bulk [csv] [--limit N]  Generate from CSV (default: keywords.csv, limit: 10)
@@ -494,16 +504,166 @@ async function main() {
 
     case 'syndicate-all': {
       const db = getDb();
-      const ready = db.filter(r => r.status === 'finished' && r.html && (!r.syndicatedTo || r.syndicatedTo.length === 0));
+      const ready = db.filter(r => r.status === 'finished' && (r.markdown || r.html));
       if (!ready.length) { console.log('No articles ready to syndicate.'); return; }
-      console.log(`📡 Syndicating ${ready.length} articles\n`);
-      for (const record of ready) {
-        console.log(`\n📄 ${record.title || record.keyword}`);
+      console.log(`📡 Syndicating ${ready.length} articles (with rate limit spacing)\n`);
+      for (let i = 0; i < ready.length; i++) {
+        const record = ready[i];
+        console.log(`\n📄 [${i + 1}/${ready.length}] ${record.title || record.keyword}`);
         await syndicateArticle(record, env);
-        // Rate limit between articles
-        await new Promise(r => setTimeout(r, 2000));
+        saveDb(db); // save after each article
+        if (i < ready.length - 1) {
+          // Dev.to rate limits to ~2 posts per 5 min → wait 2.5 min between articles
+          console.log(`    ⏱  Waiting 150s for rate limits...`);
+          await new Promise(r => setTimeout(r, 150000));
+        }
+      }
+      break;
+    }
+
+    case 'seed-existing': {
+      // Seed the DB with the 5 hand-written blog posts so they can be syndicated
+      const existing = [
+        {
+          slug: 'ai-guided-field-service-robots',
+          title: 'AI-Guided Field Service for Robots: Why the Old Model is Broken',
+          markdown: `There are **4.66 million robots** in operation worldwide. The market for robot preventive maintenance is **$8.2 billion** today and growing to **$22 billion by 2035**. Yet the way we service these machines hasn't fundamentally changed in decades.
+
+## The numbers are damning
+
+According to Aquant's 2025-2026 benchmarks, **1 in 7 onsite service visits is completely unnecessary**. A failed first visit adds 2 more visits and 14 extra days to resolution.
+
+Siemens estimates **$1.4 trillion in unplanned downtime annually**.
+
+## Why traditional field service fails robots
+
+Robots are software-defined, highly configurable, and their failure modes combine mechanical, electrical, and software issues. The traditional model — travelling technicians, OEM contracts, in-house specialists — doesn't scale.
+
+## AI changes the equation
+
+AI-guided service means loading the **full manual into context** — SOPs, wiring diagrams, error codes, firmware changelogs, repair history. No chunking. No retrieval errors.
+
+The results: **39% faster resolution**, **21% accuracy increase**, first-time fix rates jumping from 53% to 86%.
+
+---
+
+*[Farhand](https://farhand.live) provides AI-guided field service technicians for robots. [Learn more](https://farhand.live/services/robots).*`,
+        },
+        {
+          slug: 'field-service-skills-gap',
+          title: 'The Field Service Skills Gap Is Costing You Millions',
+          markdown: `**Bottom-performing technicians cost 97% more than top performers.** Not 10% more. Not 20% more. Nearly double.
+
+## The gap is real
+
+Top teams achieve an **86% first-time fix rate**. Bottom teams: **53%**. That 33-point gap translates directly to cost — failed visits account for **44% of total service costs** for bottom performers.
+
+## Why the gap exists
+
+Knowledge lives in people's heads. Your senior tech with 15 years of experience knows every quirk of every machine — but that knowledge isn't written down and walks out the door when they retire.
+
+## AI closes the gap permanently
+
+When your documentation and tribal knowledge are loaded into an AI platform, every technician gets guidance from your best expert.
+
+**Boosting your bottom 25% to average saves ~17% in service costs.** Scale that: **up to 26% savings**.
+
+---
+
+*[Farhand](https://farhand.live) combines AI with on-demand technicians. [Schedule a call](https://farhand.live/#schedule).*`,
+        },
+        {
+          slug: 'remote-resolution-field-service',
+          title: '1 in 3 Service Issues Can Be Resolved Without Sending Anyone',
+          markdown: `**1 in 5 cases could be resolved remotely but still get a truck roll.**
+
+## The cost of unnecessary truck rolls
+
+Every truck roll costs hundreds of dollars. When **14% of onsite visits are completely unnecessary**, you're burning cash on logistics that add zero value.
+
+## How AI enables remote resolution
+
+The key is **accurate diagnosis without physical presence**. With AI-guided service, the diagnostic knowledge is always available.
+
+**1 in 3 service queries can be resolved this way.** AI + phone = fixed.
+
+## When you do need to send someone
+
+When boots on the ground are needed, AI still helps. Remote triage has already identified the problem, root cause, and parts. First-time fix rates jump to **86%**.
+
+---
+
+*[Farhand](https://farhand.live) starts every service request with AI-guided remote triage.*`,
+        },
+        {
+          slug: 'knowledge-preservation-field-service',
+          title: "Your Senior Tech Is Retiring. Is Their Knowledge Retiring Too?",
+          markdown: `Every field service organization has that one person. The senior tech who's been there 15 years. When they retire, **decades of institutional knowledge walk out the door**.
+
+## The retention crisis
+
+Top companies retain **87% of employees**. Underperformers: **66%**. **1 in 4 service leaders say improving frontline onboarding is their most urgent AI challenge**.
+
+## Knowledge preservation isn't documentation
+
+The most valuable knowledge is informal — workarounds, gotchas, tips that never make it into any manual. AI-guided service captures both formal and informal knowledge.
+
+## New tech, veteran performance
+
+When your entire service history and tribal knowledge is in an AI platform, **new tech performs like a 10-year veteran on day one**.
+
+---
+
+*[Farhand's Relay platform](https://farhand.live/#relay) captures knowledge automatically.*`,
+        },
+        {
+          slug: 'first-time-fix-rate-ai',
+          title: 'How AI Pushes First-Time Fix Rates from 53% to 86%',
+          markdown: `Miss your first-time fix and you're looking at **2 more visits, 14 extra days, and a frustrated customer**.
+
+## The 33-point gap
+
+**Top teams: 86%. Bottom teams: 53%.** The difference is **knowledge access**, not tools.
+
+## What AI actually does
+
+**Before:** Analyzes symptoms against service history and failure patterns. **During:** Step-by-step instructions for this exact machine. **After:** Resolution captured, knowledge base grows.
+
+**39% faster resolution. 21% accuracy improvement. 96% AI accuracy.**
+
+## The ROI
+
+Companies see **3x ROI in year one**, **20% fewer escalations**, **13% more work orders resolved without parts**.
+
+---
+
+*[Farhand](https://farhand.live) delivers this across [robots](https://farhand.live/services/robots), [industrial machinery](https://farhand.live/services/industrial-machinery), and [medical equipment](https://farhand.live/services/medical-equipment).*`,
+        },
+      ];
+
+      const db = getDb();
+      const existingSlugs = new Set(db.map(r => r.slug));
+      let added = 0;
+      for (const post of existing) {
+        if (existingSlugs.has(post.slug)) {
+          console.log(`  ⏭  ${post.slug} — already in DB`);
+          continue;
+        }
+        db.push({
+          id: `manual-${post.slug}`,
+          keyword: post.title,
+          slug: post.slug,
+          status: 'finished',
+          title: post.title,
+          markdown: post.markdown,
+          createdAt: new Date().toISOString(),
+          pageCreated: true,
+        });
+        added++;
+        console.log(`  ✅ Seeded: ${post.slug}`);
       }
       saveDb(db);
+      console.log(`\n📊 Seeded ${added} existing articles — ready to syndicate`);
       break;
     }
 
