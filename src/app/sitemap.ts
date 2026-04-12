@@ -1,4 +1,6 @@
 import type { MetadataRoute } from 'next';
+import { cities } from '@/data/cities';
+import { machineTypes } from '@/data/machineTypes';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://farhand.live';
@@ -13,6 +15,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
     'medical-equipment',
     'general-aviation',
   ];
+
+  // Programmatic SEO: every machine-type x city landing page.
+  // 7 machines x 75 cities = 525 URLs.
+  const programmaticPages: MetadataRoute.Sitemap = [];
+  for (const machine of machineTypes) {
+    for (const city of cities) {
+      programmaticPages.push({
+        url: `${baseUrl}/services/${machine.slug}/${city.slug}`,
+        lastModified: now,
+        changeFrequency: 'monthly' as const,
+        priority: 0.7,
+      });
+    }
+  }
 
   const stakeholderPages = [
     'oems',
@@ -48,6 +64,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly' as const,
       priority: 0.8,
     })),
+    ...programmaticPages,
     ...stakeholderPages.map((page) => ({
       url: `${baseUrl}/for/${page}`,
       lastModified: now,

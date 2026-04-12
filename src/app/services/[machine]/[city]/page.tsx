@@ -42,7 +42,9 @@ export async function generateMetadata({
     };
   }
 
-  const title = `${machine.displayName} Field Service in ${city.name}, ${city.state} | Farhand`;
+  // Note: the root layout applies the "%s | Farhand" title template, so we
+  // omit the " | Farhand" suffix here to avoid duplicating it in the <title>.
+  const title = `${machine.displayName} Field Service in ${city.name}, ${city.state}`;
   const description = `On-demand, AI-guided ${machine.displayName.toLowerCase()} field service in ${city.name}, ${city.stateName}. Farhand dispatches technicians across the ${city.metroArea} with your full documentation loaded into context.`;
   const canonicalPath = `/services/${machine.slug}/${city.slug}`;
 
