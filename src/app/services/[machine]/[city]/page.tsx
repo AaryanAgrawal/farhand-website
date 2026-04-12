@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import VerticalLanding from '@/components/VerticalLanding';
 import { cities, getCityBySlug } from '@/data/cities';
 import { getMachineTypeBySlug, machineTypes } from '@/data/machineTypes';
+import { productSchema, breadcrumbSchema } from '@/lib/schema';
 
 type RouteParams = { machine: string; city: string };
 
@@ -84,8 +85,30 @@ export default async function MachineCityPage({
   const headline = `${machine.displayName} service in ${city.name}, ${city.state}.`;
   const subheadline = `On-demand technicians across the ${city.metroArea}, guided by AI that already knows your ${machine.displayName.toLowerCase()} — manuals, SOPs, wiring diagrams, and repair history loaded into context before they arrive on site.`;
 
+  const url = `https://farhand.live/services/${machine.slug}/${city.slug}`;
+  const serviceLd = productSchema({
+    name: `${machine.displayName} Field Service in ${city.name}, ${city.state}`,
+    description: `On-demand, AI-guided ${machine.displayName.toLowerCase()} field service in ${city.name}, ${city.stateName}. Farhand dispatches technicians across the ${city.metroArea}.`,
+    url,
+    category: machine.displayName,
+  });
+  const crumbLd = breadcrumbSchema([
+    { name: 'Home', url: 'https://farhand.live' },
+    { name: 'Services', url: `https://farhand.live/services/${machine.slug}` },
+    { name: `${city.name}, ${city.state}`, url },
+  ]);
+
   return (
-    <VerticalLanding
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(crumbLd) }}
+      />
+      <VerticalLanding
       machineType={machine.displayName}
       headline={headline}
       subheadline={subheadline}
@@ -94,5 +117,6 @@ export default async function MachineCityPage({
       howItWorks={machine.howItWorks}
       faqs={machine.faqs}
     />
+    </>
   );
 }
