@@ -20,7 +20,9 @@ This is the single source of truth for on-site + off-site SEO state. If a pillar
 | GBP claim + review-monitoring runbook | ✅ documented | `docs/GBP_SETUP.md` |
 | Newsletter signup (UI + placeholder API) | ✅ shipped | `src/components/NewsletterSignup.tsx`, `src/app/api/newsletter/route.ts` |
 | Search Atlas OTTO (client-side) | ✅ live | `src/app/layout.tsx` (UUID `c3ddc202-592a-4afa-b651-4fdef43e7e20`) |
-| Search Atlas API / MCP automation | 🟡 partial | scaffolded, not wired — see below |
+| Search Atlas REST API pipeline | ✅ shipped | `scripts/content-pipeline.ts` — `sa-status`, `sa-issues`, `sa-recrawl`, `sa-snapshot` |
+| Search Atlas MCP (keywords, GBP, content scoring, backlinks) | ✅ installed | `~/.claude/settings.json` → `searchatlas` server; 16 tools available in Claude sessions |
+| OTTO widget **active** (pushing live fixes) | ⚠️ NOT active | API returns `is_active: false`. Toggle "Activate" in Search Atlas dashboard. |
 | `robots.txt` | ⬜ missing | — |
 | FAQ JSON-LD | ⬜ not started | `src/data/faqs.ts` exists, markup not emitted |
 | Per-post OG cover images | ⬜ not started | pipeline ready, no credentials populated |
@@ -72,33 +74,58 @@ This is the single source of truth for on-site + off-site SEO state. If a pillar
 
 ---
 
-## Search Atlas — 🟡 partial
+## Search Atlas — ✅ wired, ⚠️ one toggle pending
 
 | Piece | Status | Notes |
 |---|---|---|
-| Client-side OTTO dynamic optimization | ✅ live | `src/app/layout.tsx` loads `dashboard.searchatlas.com/scripts/dynamic_optimization.js` with UUID `c3ddc202-592a-4afa-b651-4fdef43e7e20`. On-page optimization runs automatically. |
-| `searchatlas-mcp-server` in `.claude/settings.json` | ⬜ not installed | Separate task — touches `.claude/settings.json`. |
-| `SEARCHATLAS_API_KEY` populated | ⬜ empty | Declared in `scripts/content-pipeline.ts` and `scripts/.env.syndication.example` but no real value. No code path actually calls Search Atlas APIs yet. |
-| Keyword research workflow automated | ⬜ not started | Currently we're hand-picking keywords. |
-| Site audit / content scoring loop | ⬜ not started | OTTO is running but we don't read its recommendations programmatically. |
-| GBP review monitoring via MCP | ⬜ not started | Runbook in `docs/GBP_SETUP.md` but not executed. |
-| LLM visibility tracking (ChatGPT / Perplexity citations) | ⬜ not started | — |
+| Client-side OTTO dynamic optimization | ✅ live | `src/app/layout.tsx` loads `dashboard.searchatlas.com/scripts/dynamic_optimization.js` with UUID `c3ddc202-592a-4afa-b651-4fdef43e7e20`. |
+| OTTO widget engaged (`pixel_tag_state`) | ✅ | API confirms `installed` + "OTTO AI SEO is Engaged". |
+| `searchatlas-mcp-server` in `~/.claude/settings.json` | ✅ installed | 16 MCP tools available from any Claude session (`searchatlas_orchestrator`, `searchatlas_otto_seo`, `searchatlas_content`, `searchatlas_site_explorer`, `searchatlas_gbp`, `searchatlas_authority_building`, `searchatlas_llm_visibility`, `searchatlas_keywords`, `searchatlas_ppc`, `searchatlas_website_studio`, plus 6 management tools). |
+| REST API pipeline commands | ✅ shipped | `scripts/content-pipeline.ts` exposes `sa-status`, `sa-issues`, `sa-recrawl`, `sa-snapshot`. All auth via `x-api-key` header against `https://sa.searchatlas.com/api/v2/`. |
+| `SEARCHATLAS_API_KEY` in `.env.syndication` | ✅ documented | Pull from `~/.claude/settings.json` or the Search Atlas dashboard. |
+| Site health baseline | ✅ captured | 917 / 1000 as of last crawl. Pre-merge baseline: 3 pages, 2 sitemap URLs. Post-merge recrawl triggered 2026-04-13 — will include all 562 pages once push lands. |
+| Open issue groups tracked | ✅ visible | 11 open groups. Top four by `health_to_gain`: Page Title (+21), Images (+20), Content (+18), Page Headers (+13). Run `sa-issues` for the live list. |
+| **OTTO `is_active`** | ⚠️ **false** | Widget is engaged but not activating fixes. **One-click toggle in the Search Atlas dashboard** — until that flips, OTTO reads the site but doesn't push DOM patches. Blocks the actual on-page optimization lift. |
+| Keyword research automated | 🟡 MCP-only | No documented REST endpoint. Use the `searchatlas_keywords` MCP tool from Claude instead. |
+| GBP review monitoring | 🟡 MCP-only | No documented REST endpoint. Use `searchatlas_gbp` MCP tool from Claude. |
+| Content scoring per URL | 🟡 MCP-only | Use `searchatlas_content` MCP tool. |
+| Backlink / competitor analysis | 🟡 MCP-only | Use `searchatlas_site_explorer` MCP tool. |
+| LLM visibility tracking | 🟡 MCP-only | Use `searchatlas_llm_visibility` MCP tool. |
 
-**Short answer: Search Atlas is NOT complete.** Client-side OTTO is running, which means on-page optimization happens automatically on every pageview. Everything else — keyword research, audits, rank tracking, GBP review monitoring, backlink analysis — is documented but not wired.
+### What the REST API currently exposes
 
-**To complete it:**
+Only four endpoint families are stable enough on the public REST surface to automate from CI:
 
-1. Install the MCP server: add to `.claude/settings.json`:
-   ```json
-   "searchatlas": {
-     "command": "npx",
-     "args": ["searchatlas-mcp-server"],
-     "env": { "SEARCHATLAS_API_KEY": "<key>" }
-   }
-   ```
-2. Populate `SEARCHATLAS_API_KEY` in `scripts/.env.syndication`.
-3. Add MCP-driven commands to `scripts/content-pipeline.ts`: `audit-site`, `research-keywords <vertical>`, `score-post <slug>`, `poll-gbp-reviews`.
-4. Wire the GBP runbook steps from `docs/GBP_SETUP.md` into an actual scheduled task.
+- `GET  /api/v2/otto-projects/{uuid}/` — project detail (domain rating, refdomains, backlinks, pixel state, ROI, last crawl)
+- `GET  /api/v2/site-audit/{id}/` — site audit detail (site health, pages crawled, sitemap coverage, CMS detection, JS rendering flag)
+- `GET  /api/v2/site-audit/{id}/issues/` — issue groups with `health_to_gain`, severity counts
+- `POST /api/v2/site-audit/{id}/recrawl/` — trigger a fresh crawl
+
+Everything else (keywords, GBP, backlinks, content scoring, LLM visibility) is **MCP-only**. Call those from a Claude session — the MCP server runs from `~/.claude/settings.json` and all 16 tools load automatically.
+
+### Pipeline commands
+
+```bash
+# OTTO project + site audit overview
+npx tsx scripts/content-pipeline.ts sa-status
+
+# Open issue groups, ranked by health_to_gain (biggest SEO wins at the top)
+npx tsx scripts/content-pipeline.ts sa-issues
+
+# Kick off a fresh site audit crawl (should_repoll flips true, audit_started_at updates)
+npx tsx scripts/content-pipeline.ts sa-recrawl
+
+# Dump project + audit + issues JSON to scripts/.content-data/seo-snapshots/{ISO}.json
+# Run weekly to track site health trends over time
+npx tsx scripts/content-pipeline.ts sa-snapshot
+```
+
+### Remaining Search Atlas work
+
+1. **Flip `is_active` to true** in the Search Atlas dashboard. This is a one-click toggle under the OTTO project settings and is the single biggest blocker to on-page optimization actually taking effect.
+2. **Wait for the 2026-04-13 recrawl to finish** — it was triggered as part of this work. The pre-merge audit saw only 3 pages; the post-merge recrawl will include all 562.
+3. **Schedule `sa-snapshot` weekly** (cron or GitHub Action) so we get a trend file per week under `scripts/.content-data/seo-snapshots/`.
+4. **Route keyword research + GBP polling through the MCP tools** in a Claude session — they're available, no new code needed.
 
 ---
 

@@ -362,6 +362,177 @@ function absoluteCoverUrl(record: ArticleRecord): string | undefined {
   return record.coverImage ? `${BASE_URL}${record.coverImage}` : undefined;
 }
 
+// ── Search Atlas (REST) ───────────────────────────────────────────────
+// Auth: header `x-api-key: <key>`. Confirmed base: https://sa.searchatlas.com
+// OTTO project UUID is hard-coded because the account only has one project
+// today. Point this at a different UUID by setting SEARCHATLAS_OTTO_UUID.
+const SA_BASE = 'https://sa.searchatlas.com/api/v2';
+const SA_OTTO_UUID_DEFAULT = 'c3ddc202-592a-4afa-b651-4fdef43e7e20';
+
+function saKey(env: Env): string {
+  const key = env.SEARCHATLAS_API_KEY;
+  if (!key) {
+    throw new Error(
+      'SEARCHATLAS_API_KEY not set in scripts/.env.syndication. Grab it from ~/.claude/settings.json or the Search Atlas dashboard → Settings → API.',
+    );
+  }
+  return key;
+}
+
+function saOttoUuid(): string {
+  return process.env.SEARCHATLAS_OTTO_UUID || SA_OTTO_UUID_DEFAULT;
+}
+
+async function saFetch(path: string, key: string, init?: RequestInit): Promise<Response> {
+  const url = path.startsWith('http') ? path : `${SA_BASE}${path}`;
+  const res = await fetch(url, {
+    ...init,
+    headers: {
+      'x-api-key': key,
+      'Content-Type': 'application/json',
+      ...(init?.headers || {}),
+    },
+  });
+  return res;
+}
+
+interface OttoProject {
+  uuid: string;
+  hostname: string;
+  is_active: boolean;
+  activated_at: string | null;
+  dr: number;
+  refdomains: number;
+  backlinks: number;
+  site_audit: number;
+  pixel_tag_state: string;
+  pixel_state_display?: { label?: string };
+  task_status: string;
+  time_saved_total?: string;
+  otto_roi?: number;
+  pages_with_issues?: number;
+  last_crawl?: string;
+}
+
+interface SiteAudit {
+  id: number;
+  property_url: string;
+  processing_status: string;
+  should_repoll: boolean;
+  audit_started_at: string;
+  audit_completed_at: string;
+  total_urls_in_sitemaps: number;
+  detected_cms: string;
+  javascript_rendering_used: boolean;
+  site_audit?: {
+    site_health?: { total: number; actual: number };
+    total_pages?: { current: number };
+  };
+}
+
+interface AuditIssueGroup {
+  group: string;
+  group_snakecase: string;
+  group_affected: number;
+  group_affected_pct: number;
+  health_to_gain: number;
+  is_compliant: boolean;
+  is_ignored: boolean;
+  compliant_count: number;
+  notice_count: number;
+  warning_count: number;
+  error_count: number;
+}
+
+async function saGetProject(env: Env, uuid = saOttoUuid()): Promise<OttoProject> {
+  const res = await saFetch(`/otto-projects/${uuid}/`, saKey(env));
+  if (!res.ok) throw new Error(`otto-projects/${uuid}: ${res.status} ${await res.text()}`);
+  return res.json();
+}
+
+async function saGetAudit(env: Env, auditId: number): Promise<SiteAudit> {
+  const res = await saFetch(`/site-audit/${auditId}/`, saKey(env));
+  if (!res.ok) throw new Error(`site-audit/${auditId}: ${res.status} ${await res.text()}`);
+  return res.json();
+}
+
+async function saGetIssues(env: Env, auditId: number): Promise<{ issues: AuditIssueGroup[]; site_health?: { actual: number; total: number } }> {
+  const res = await saFetch(`/site-audit/${auditId}/issues/`, saKey(env));
+  if (!res.ok) throw new Error(`site-audit/${auditId}/issues: ${res.status} ${await res.text()}`);
+  return res.json();
+}
+
+async function saTriggerRecrawl(env: Env, auditId: number): Promise<void> {
+  const res = await saFetch(`/site-audit/${auditId}/recrawl/`, saKey(env), { method: 'POST' });
+  if (!res.ok) throw new Error(`recrawl: ${res.status} ${await res.text()}`);
+}
+
+function saFormatProject(p: OttoProject): string {
+  const lines = [
+    `  Host:            ${p.hostname}`,
+    `  OTTO UUID:       ${p.uuid}`,
+    `  Pixel:           ${p.pixel_tag_state} — ${p.pixel_state_display?.label || 'n/a'}`,
+    `  OTTO active:     ${p.is_active ? '✅ yes' : '⚠️  NO — toggle "Activate" in Search Atlas dashboard to push fixes live'}`,
+    `  Domain Rating:   ${p.dr}`,
+    `  Refdomains:      ${p.refdomains}`,
+    `  Backlinks:       ${p.backlinks}`,
+    `  Time saved:      ${p.time_saved_total || '—'}`,
+    `  OTTO ROI:        $${p.otto_roi ?? 0}`,
+    `  Pages w/ issues: ${p.pages_with_issues ?? '—'}`,
+    `  Last crawl:      ${p.last_crawl || '—'}`,
+    `  Site audit ID:   ${p.site_audit}`,
+    `  Task status:     ${p.task_status}`,
+  ];
+  return lines.join('\n');
+}
+
+function saFormatAudit(a: SiteAudit): string {
+  const health = a.site_audit?.site_health;
+  const pages = a.site_audit?.total_pages?.current ?? '—';
+  return [
+    `  URL:              ${a.property_url}`,
+    `  Status:           ${a.processing_status}${a.should_repoll ? ' (recrawl in flight)' : ''}`,
+    `  Started:          ${a.audit_started_at}`,
+    `  Completed:        ${a.audit_completed_at}`,
+    `  Site health:      ${health ? `${health.actual}/${health.total}` : '—'}`,
+    `  Pages crawled:    ${pages}`,
+    `  Sitemap URLs:     ${a.total_urls_in_sitemaps}`,
+    `  JS rendering:     ${a.javascript_rendering_used ? 'on' : 'off'}`,
+    `  Detected CMS:     ${a.detected_cms}`,
+  ].join('\n');
+}
+
+function saFormatIssues(issues: AuditIssueGroup[]): string {
+  const open = issues
+    .filter((i) => !i.is_compliant && !i.is_ignored)
+    .sort((a, b) => (b.health_to_gain || 0) - (a.health_to_gain || 0));
+  if (!open.length) return '  No open issue groups. Site is compliant.';
+  const rows = open.map((i) => {
+    const sev = i.error_count > 0 ? '🔴' : i.warning_count > 0 ? '🟡' : '⚪';
+    return `  ${sev} [+${i.health_to_gain} health]  ${i.group.padEnd(28)}  ${i.group_affected} pages (${i.group_affected_pct}%)  — ${i.error_count}E / ${i.warning_count}W / ${i.notice_count}N`;
+  });
+  return rows.join('\n');
+}
+
+interface SeoSnapshot {
+  capturedAt: string;
+  project: OttoProject;
+  audit: SiteAudit;
+  issues: AuditIssueGroup[];
+}
+
+async function saCaptureSnapshot(env: Env): Promise<SeoSnapshot> {
+  const project = await saGetProject(env);
+  const audit = await saGetAudit(env, project.site_audit);
+  const issuesResp = await saGetIssues(env, project.site_audit);
+  return {
+    capturedAt: new Date().toISOString(),
+    project,
+    audit,
+    issues: issuesResp.issues || [],
+  };
+}
+
 // ── Syndication ───────────────────────────────────────────────────────
 async function syndicateToDevTo(title: string, markdown: string, canonical: string, tags: string[], apiKey: string, coverImage: string | undefined, retries = 2): Promise<string> {
   const res = await fetch('https://dev.to/api/articles', {
@@ -557,6 +728,10 @@ async function main() {
   generate-all-images              Generate cover images for all articles missing one
   syndicate <slug>                 Syndicate one article to all platforms
   syndicate-all                    Syndicate all articles
+  sa-status                        Search Atlas: OTTO project + site audit overview
+  sa-issues                        Search Atlas: open issue groups, ranked by health_to_gain
+  sa-recrawl                       Search Atlas: trigger a fresh site audit recrawl
+  sa-snapshot                      Search Atlas: save project + audit + issues JSON to .content-data/seo-snapshots/
   list                             List all articles and status
   stats                            Pipeline statistics
     `);
@@ -732,6 +907,68 @@ async function main() {
         } catch (err: any) {
           console.error(`  ❌ ${err.message}`);
         }
+      }
+      break;
+    }
+
+    case 'sa-status': {
+      try {
+        const project = await saGetProject(env);
+        const audit = await saGetAudit(env, project.site_audit);
+        console.log('\n📊 Search Atlas — OTTO project');
+        console.log(saFormatProject(project));
+        console.log('\n📊 Search Atlas — site audit');
+        console.log(saFormatAudit(audit));
+      } catch (err: any) {
+        console.error(`❌ ${err.message}`);
+        process.exitCode = 1;
+      }
+      break;
+    }
+
+    case 'sa-issues': {
+      try {
+        const project = await saGetProject(env);
+        const issuesResp = await saGetIssues(env, project.site_audit);
+        const sh = issuesResp.site_health;
+        console.log(`\n📊 Search Atlas — open issue groups${sh ? ` (site health ${sh.actual}/${sh.total})` : ''}`);
+        console.log(saFormatIssues(issuesResp.issues || []));
+      } catch (err: any) {
+        console.error(`❌ ${err.message}`);
+        process.exitCode = 1;
+      }
+      break;
+    }
+
+    case 'sa-recrawl': {
+      try {
+        const project = await saGetProject(env);
+        await saTriggerRecrawl(env, project.site_audit);
+        console.log(`✅ Recrawl queued for site audit #${project.site_audit} (${project.hostname})`);
+        console.log('   Poll with: sa-status — expect audit_started_at to update and should_repoll=true');
+      } catch (err: any) {
+        console.error(`❌ ${err.message}`);
+        process.exitCode = 1;
+      }
+      break;
+    }
+
+    case 'sa-snapshot': {
+      try {
+        const snap = await saCaptureSnapshot(env);
+        const dir = join(DATA_DIR, 'seo-snapshots');
+        mkdirSync(dir, { recursive: true });
+        const stamp = new Date().toISOString().replace(/[:.]/g, '-');
+        const path = join(dir, `${stamp}.json`);
+        writeFileSync(path, JSON.stringify(snap, null, 2));
+        const health = snap.audit.site_audit?.site_health;
+        console.log(`✅ Snapshot saved → ${path}`);
+        console.log(`   site health: ${health ? `${health.actual}/${health.total}` : '—'}`);
+        console.log(`   open issue groups: ${(snap.issues || []).filter(i => !i.is_compliant && !i.is_ignored).length}`);
+        console.log(`   backlinks: ${snap.project.backlinks} / refdomains: ${snap.project.refdomains}`);
+      } catch (err: any) {
+        console.error(`❌ ${err.message}`);
+        process.exitCode = 1;
       }
       break;
     }
