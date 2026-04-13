@@ -1,11 +1,12 @@
-import Navigation from '@/components/Navigation';
-import Footer from '@/components/Footer';
-import FAQSection from '@/components/FAQSection';
-import NewsletterSignup from '@/components/NewsletterSignup';
-import Link from 'next/link';
-import { coreFaqs } from '@/data/faqs';
+export type BlogPostMeta = {
+  slug: string;
+  title: string;
+  excerpt: string;
+  date: string;
+  category: string;
+};
 
-const posts = [
+export const blogPosts: BlogPostMeta[] = [
   {
     slug: 'field-service-roi-calculator',
     title: 'How to Calculate Field Service ROI in 2026',
@@ -93,7 +94,7 @@ const posts = [
   {
     slug: 'remote-resolution-field-service',
     title: '1 in 3 Service Issues Can Be Resolved Without Sending Anyone',
-    excerpt: '1 in 5 cases could be resolved remotely but still get a truck roll. AI + phone = fixed. Here\'s how remote resolution works.',
+    excerpt: "1 in 5 cases could be resolved remotely but still get a truck roll. AI + phone = fixed. Here's how remote resolution works.",
     date: '2026-04-08',
     category: 'Technology',
   },
@@ -112,58 +113,3 @@ const posts = [
     category: 'Technology',
   },
 ];
-
-export const metadata = {
-  title: 'Blog',
-  description: 'Insights on AI-guided field service, robot maintenance, and the future of industrial service operations.',
-};
-
-export default function BlogPage() {
-  return (
-    <main className="bg-background min-h-screen">
-      <Navigation />
-
-      <section className="pt-32 md:pt-40 lg:pt-48 pb-12 md:pb-16 lg:pb-20">
-        <div className="container text-center">
-          <h1 className="mb-4">Blog</h1>
-          <h2 className="max-w-[600px] mx-auto">
-            Insights on AI-guided field service and the future of industrial operations.
-          </h2>
-        </div>
-      </section>
-
-      <section className="pb-16 md:pb-24 lg:pb-32">
-        <div className="container max-w-[800px]">
-          {posts.map((post, i) => (
-            <Link
-              key={i}
-              href={`/blog/${post.slug}`}
-              className="block py-8 border-b border-white/10 no-underline transition-opacity duration-200 hover:opacity-80"
-            >
-              <div className="flex justify-between items-center mb-3 flex-wrap gap-2">
-                <span className="text-xs text-accent font-medium uppercase tracking-wider">
-                  {post.category}
-                </span>
-                <span className="text-xs text-light-gray/50">
-                  {post.date}
-                </span>
-              </div>
-              <h3 className="text-xl md:text-2xl font-medium mb-2 leading-[1.3]">
-                {post.title}
-              </h3>
-              <p className="text-base text-light-gray/80 m-0 leading-relaxed">
-                {post.excerpt}
-              </p>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      <NewsletterSignup />
-
-      <FAQSection faqs={coreFaqs} subtitle="Everything you need to know about AI-guided field service." />
-
-      <Footer />
-    </main>
-  );
-}
