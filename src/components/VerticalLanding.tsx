@@ -4,6 +4,14 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import Navigation from './Navigation';
 import Footer from './Footer';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 
 export interface VerticalPageProps {
   machineType: string;
@@ -29,7 +37,7 @@ export default function VerticalLanding({ machineType, headline, subheadline, pa
   };
 
   return (
-    <main style={{ background: '#000', minHeight: '100vh' }}>
+    <main className="bg-background min-h-screen">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
@@ -37,21 +45,13 @@ export default function VerticalLanding({ machineType, headline, subheadline, pa
       <Navigation />
 
       {/* Hero */}
-      <section style={{
-        minHeight: '70vh',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        textAlign: 'center',
-        padding: 'clamp(6rem, 15vw, 10rem) 0 clamp(3rem, 8vw, 5rem)',
-      }}>
-        <div className="container" style={{ maxWidth: '900px' }}>
+      <section className="min-h-[70vh] flex flex-col justify-center items-center text-center pt-[clamp(6rem,15vw,10rem)] pb-[clamp(3rem,8vw,5rem)]">
+        <div className="container max-w-[900px]">
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease }}
-            style={{ fontSize: '16px', color: 'var(--accent-green)', marginBottom: '1.5rem', fontWeight: 500, letterSpacing: '0.05em', textTransform: 'uppercase' }}
+            className="text-base text-accent mb-6 font-medium tracking-wider uppercase"
           >
             {machineType} Field Service
           </motion.p>
@@ -59,7 +59,7 @@ export default function VerticalLanding({ machineType, headline, subheadline, pa
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease }}
-            style={{ marginBottom: '1.5rem' }}
+            className="mb-6"
           >
             {headline}
           </motion.h1>
@@ -67,37 +67,35 @@ export default function VerticalLanding({ machineType, headline, subheadline, pa
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 1, ease }}
-            style={{ maxWidth: '750px', margin: '0 auto 2.5rem', fontWeight: 400 }}
+            className="max-w-[750px] mx-auto mb-10 font-normal"
           >
             {subheadline}
           </motion.h2>
-          <motion.a
-            href="#schedule"
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.8 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.98 }}
-            className="btn-primary"
           >
-            Get started
-          </motion.a>
+            <Button asChild size="lg">
+              <a href="#schedule">Get started</a>
+            </Button>
+          </motion.div>
         </div>
       </section>
 
       {/* Pain Points */}
-      <section className="section-padding" style={{ background: '#000' }}>
-        <div className="container" style={{ textAlign: 'center' }}>
+      <section className="bg-background py-[clamp(3rem,8vw,6rem)]">
+        <div className="container text-center">
           <motion.h3
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease }}
             viewport={{ once: true }}
-            style={{ marginBottom: 'clamp(2rem, 6vw, 4rem)', fontWeight: 400, fontSize: 'clamp(1.5rem, 4vw, 32px)' }}
+            className="mb-[clamp(2rem,6vw,4rem)] font-normal text-[clamp(1.5rem,4vw,32px)]"
           >
             Sound familiar?
           </motion.h3>
-          <div className="grid-3" style={{ maxWidth: '1000px', margin: '0 auto' }}>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 max-w-[1000px] mx-auto">
             {painPoints.map((point, i) => (
               <motion.div
                 key={i}
@@ -105,12 +103,12 @@ export default function VerticalLanding({ machineType, headline, subheadline, pa
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1, duration: 0.8, ease }}
                 viewport={{ once: true }}
-                className="card-glass"
-                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', minHeight: '140px' }}
               >
-                <p style={{ fontSize: 'clamp(18px, 2.5vw, 22px)', fontWeight: 500, color: 'var(--foreground)', margin: 0, lineHeight: 1.4 }}>
-                  {point}
-                </p>
+                <Card className="flex items-center justify-center text-center min-h-[140px]">
+                  <p className="text-lg md:text-xl font-medium text-foreground m-0 leading-snug">
+                    {point}
+                  </p>
+                </Card>
               </motion.div>
             ))}
           </div>
@@ -119,9 +117,9 @@ export default function VerticalLanding({ machineType, headline, subheadline, pa
 
       {/* Stats */}
       {stats && stats.length > 0 && (
-        <section style={{ padding: 'clamp(2rem, 5vw, 4rem) 0' }}>
+        <section className="py-[clamp(2rem,5vw,4rem)]">
           <div className="container">
-            <div style={{ display: 'flex', justifyContent: 'center', gap: 'clamp(2rem, 5vw, 4rem)', flexWrap: 'wrap' }}>
+            <div className="flex justify-center gap-[clamp(2rem,5vw,4rem)] flex-wrap">
               {stats.map((stat, i) => (
                 <motion.div
                   key={i}
@@ -129,12 +127,12 @@ export default function VerticalLanding({ machineType, headline, subheadline, pa
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.15, duration: 0.8, ease }}
                   viewport={{ once: true }}
-                  style={{ textAlign: 'center', minWidth: '150px' }}
+                  className="text-center min-w-[150px]"
                 >
-                  <p style={{ fontSize: 'clamp(32px, 5vw, 48px)', fontWeight: 300, color: 'var(--accent-green)', marginBottom: '0.5rem', lineHeight: 1 }}>
+                  <p className="text-[clamp(32px,5vw,48px)] font-light text-accent mb-2 leading-none">
                     {stat.value}
                   </p>
-                  <p style={{ fontSize: '15px', color: 'var(--light-gray)', opacity: 0.8, margin: 0 }}>
+                  <p className="text-[15px] text-light-gray/80 m-0">
                     {stat.label}
                   </p>
                 </motion.div>
@@ -145,14 +143,14 @@ export default function VerticalLanding({ machineType, headline, subheadline, pa
       )}
 
       {/* How It Works */}
-      <section className="section-padding" style={{ background: '#000' }}>
-        <div className="container" style={{ textAlign: 'center' }}>
+      <section className="bg-background py-[clamp(3rem,8vw,6rem)]">
+        <div className="container text-center">
           <motion.h3
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease }}
             viewport={{ once: true }}
-            style={{ marginBottom: '1rem', fontWeight: 300 }}
+            className="mb-4 font-light"
           >
             Farhand <strong>Relay</strong>&#8482;
           </motion.h3>
@@ -161,11 +159,11 @@ export default function VerticalLanding({ machineType, headline, subheadline, pa
             whileInView={{ opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.8 }}
             viewport={{ once: true }}
-            style={{ fontSize: '18px', color: 'var(--light-gray)', opacity: 0.8, marginBottom: 'clamp(2rem, 6vw, 4rem)', maxWidth: '600px', margin: '0 auto clamp(2rem, 6vw, 4rem)' }}
+            className="text-lg text-light-gray/80 mb-[clamp(2rem,6vw,4rem)] max-w-[600px] mx-auto"
           >
             Our AI platform that becomes your senior technician.
           </motion.p>
-          <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'left' }}>
+          <div className="max-w-[800px] mx-auto text-left">
             {howItWorks.map((step, i) => (
               <motion.div
                 key={i}
@@ -173,18 +171,12 @@ export default function VerticalLanding({ machineType, headline, subheadline, pa
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.15, duration: 0.8, ease }}
                 viewport={{ once: true }}
-                style={{
-                  display: 'flex',
-                  alignItems: 'flex-start',
-                  gap: '1.5rem',
-                  padding: '1.5rem 0',
-                  borderBottom: i < howItWorks.length - 1 ? '1px solid var(--border-color)' : 'none',
-                }}
+                className={`flex items-start gap-6 py-6 ${i < howItWorks.length - 1 ? 'border-b border-white/10' : ''}`}
               >
-                <span style={{ fontSize: '14px', fontWeight: 600, color: 'var(--accent-green)', minWidth: '28px', paddingTop: '2px' }}>
+                <span className="text-sm font-semibold text-accent min-w-[28px] pt-0.5">
                   0{i + 1}
                 </span>
-                <p style={{ fontSize: 'clamp(17px, 2vw, 20px)', color: 'var(--foreground)', margin: 0, lineHeight: 1.5 }}>
+                <p className="text-base md:text-xl text-foreground m-0 leading-relaxed">
                   {step}
                 </p>
               </motion.div>
@@ -194,37 +186,25 @@ export default function VerticalLanding({ machineType, headline, subheadline, pa
       </section>
 
       {/* FAQs */}
-      <section className="section-padding" style={{ background: '#000' }}>
-        <div className="container" style={{ maxWidth: '800px' }}>
+      <section className="bg-background py-[clamp(3rem,8vw,6rem)]">
+        <div className="container max-w-[800px]">
           <motion.h3
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease }}
             viewport={{ once: true }}
-            style={{ textAlign: 'center', marginBottom: 'clamp(2rem, 6vw, 4rem)', fontWeight: 400 }}
+            className="text-center mb-[clamp(2rem,6vw,4rem)] font-normal"
           >
             Frequently asked questions
           </motion.h3>
-          {faqs.map((faq, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1, duration: 0.8, ease }}
-              viewport={{ once: true }}
-              style={{
-                padding: '1.5rem 0',
-                borderBottom: '1px solid var(--border-color)',
-              }}
-            >
-              <h4 style={{ fontSize: 'clamp(17px, 2vw, 20px)', fontWeight: 500, color: 'var(--foreground)', marginBottom: '0.75rem' }}>
-                {faq.q}
-              </h4>
-              <p style={{ fontSize: '16px', color: 'var(--light-gray)', lineHeight: 1.6, margin: 0, opacity: 0.9 }}>
-                {faq.a}
-              </p>
-            </motion.div>
-          ))}
+          <Accordion type="single" collapsible defaultValue="item-0" className="w-full">
+            {faqs.map((faq, i) => (
+              <AccordionItem key={i} value={`item-${i}`}>
+                <AccordionTrigger className="text-lg sm:text-xl">{faq.q}</AccordionTrigger>
+                <AccordionContent>{faq.a}</AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
         </div>
       </section>
 
