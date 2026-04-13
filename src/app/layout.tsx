@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, DM_Sans, Playfair_Display } from "next/font/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const inter = Inter({
@@ -58,6 +60,14 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <meta name="facebook-domain-verification" content="nfla0sjkkzg556b9nwgktdftfas5gk" />
+        {/* Google Search Console — paste verification code here after signup */}
+        {process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION && (
+          <meta name="google-site-verification" content={process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION} />
+        )}
+        {/* Bing Webmaster Tools — paste verification code here after signup */}
+        {process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION && (
+          <meta name="msvalidate.01" content={process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION} />
+        )}
         <link rel="alternate" type="application/rss+xml" title="Farhand Blog" href="/rss.xml" />
         {/* Google Analytics 4 — replace G-XXXXXXXXXX with your GA4 measurement ID */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX" />
@@ -115,6 +125,8 @@ export default function RootLayout({
       </head>
       <body className={`${dmSans.variable} ${serifDisplay.variable} ${inter.variable}`}>
         {children}
+        <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );

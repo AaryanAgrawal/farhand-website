@@ -1,0 +1,73 @@
+name: IndexNow ping
+
+on:
+  # Run after every successful deploy
+  workflow_run:
+    workflows: ["Deploy to Vercel"]
+    types: [completed]
+  # Manual trigger
+  workflow_dispatch:
+  # Weekly full resubmit every Monday 09:00 UTC
+  schedule:
+    - cron: "0 9 * * 1"
+
+concurrency:
+  group: indexnow
+  cancel-in-progress: false
+
+jobs:
+  ping:
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch live sitemap and extract URLs
+        id: urls
+        run: |
+          curl -fsSL https://farhand.live/sitemap.xml -o sitemap.xml
+          grep -oE '<loc>[^<]+</loc>' sitemap.xml | sed -E 's|</?loc>||g' > urls.txt
+          echo "count=$(wc -l < urls.txt)" >> "$GITHUB_OUTPUT"
+          head -5 urls.txt
+
+      - name: Submit to IndexNow (Bing + Yandex)
+        env:
+          KEY: "08cf9d26cc70338b32441f8e74e164bbf84dfbf494942ad58442cae769626a04"
+        run: |
+          echo "Submitting ${{ steps.urls.outputs.count }} URLs to IndexNow"
+          python3 <<'PY'
+          import json, urllib.request, os
+
+          key = os.environ["KEY"]
+          host = "farhand.live"
+          with open("urls.txt") as f:
+              urls = [u.strip() for u in f if u.strip()]
+
+          # IndexNow accepts up to 10,000 URLs per request
+          BATCH = 10000
+          endpoints = [
+              "https://api.indexnow.org/indexnow",
+              "https://yandex.com/indexnow",
+          ]
+
+          for endpoint in endpoints:
+              for i in range(0, len(urls), BATCH):
+                  batch = urls[i:i+BATCH]
+                  body = json.dumps({
+                      "host": host,
+                      "key": key,
+                      "keyLocation": f"https://{host}/{key}.txt",
+                      "urlList": batch,
+                  }).encode()
+                  req = urllib.request.Request(
+                      endpoint,
+                      data=body,
+                      headers={"Content-Type": "application/json; charset=utf-8"},
+                      method="POST",
+                  )
+                  try:
+                      with urllib.request.urlopen(req, timeout=30) as resp:
+                          print(f"{endpoint} batch {i//BATCH + 1}: {resp.status} {resp.reason}")
+                  except Exception as e:
+                      print(f"{endpoint} batch {i//BATCH + 1}: {e}")
+          PY
