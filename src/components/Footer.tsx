@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Cal, { getCalApi } from "@calcom/embed-react";
 import { FaLinkedin } from 'react-icons/fa';
+import { Button } from '@/components/ui/button';
 
 export default function Footer() {
   useEffect(() => {
@@ -20,7 +21,7 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer id="schedule" style={{ background: '#000', paddingBottom: '2rem' }}>
+    <footer id="schedule" className="bg-background pb-8">
       <div className="container">
 
         {/* CTA Heading */}
@@ -29,13 +30,13 @@ export default function Footer() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: [0.19, 1, 0.22, 1] }}
           viewport={{ once: true, margin: "-100px" }}
-          style={{ textAlign: 'center', padding: 'clamp(3rem, 8vw, 5rem) 0 clamp(2rem, 5vw, 3rem)' }}
+          className="text-center pt-[clamp(3rem,8vw,5rem)] pb-[clamp(2rem,5vw,3rem)]"
         >
-          <h3 style={{ fontSize: 'clamp(1.5rem, 4vw, 32px)', marginBottom: '0.25rem', lineHeight: 1.5, fontWeight: 400 }}>
+          <h3 className="text-[clamp(1.5rem,4vw,32px)] mb-1 leading-[1.5] font-normal">
             You don&apos;t need a field support team.
           </h3>
-          <h3 style={{ fontSize: 'clamp(1.5rem, 4vw, 32px)', lineHeight: 1.5, fontWeight: 400 }}>
-            You need field service <em className="text-accent" style={{ fontStyle: 'italic' }}>done</em>.
+          <h3 className="text-[clamp(1.5rem,4vw,32px)] leading-[1.5] font-normal">
+            You need field service <em className="text-accent italic">done</em>.
           </h3>
         </motion.div>
 
@@ -45,81 +46,36 @@ export default function Footer() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1 }}
           viewport={{ once: true }}
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'flex-start',
-            gap: 'clamp(3rem, 8vw, 6rem)',
-            flexWrap: 'wrap',
-            maxWidth: '900px',
-            margin: '0 auto clamp(2rem, 5vw, 3rem)',
-          }}
+          className="flex justify-center items-start gap-[clamp(3rem,8vw,6rem)] flex-wrap max-w-[900px] mx-auto mb-[clamp(2rem,5vw,3rem)]"
         >
           {/* Contact Info */}
-          <div style={{ textAlign: 'center', minWidth: '200px' }}>
-            <p style={{ fontSize: 'clamp(18px, 2.5vw, 20px)', color: 'var(--foreground)', marginBottom: '0.5rem', fontWeight: 400 }}>
+          <div className="text-center min-w-[200px]">
+            <p className="text-lg md:text-xl text-foreground mb-2 font-normal">
               aaryan@farhand.live
             </p>
-            <p style={{ fontSize: 'clamp(18px, 2.5vw, 20px)', color: 'var(--foreground)', fontWeight: 400, margin: 0 }}>
+            <p className="text-lg md:text-xl text-foreground font-normal m-0">
               (857) 498-9778
             </p>
           </div>
 
           {/* Email Form */}
-          <div style={{ flex: '1 1 320px', maxWidth: '520px' }}>
-            <p style={{ fontSize: '15px', color: 'var(--light-gray)', opacity: 0.7, marginBottom: '0.75rem' }}>
-              Email
-            </p>
-            <div style={{
-              background: 'rgba(187, 187, 187, 0.15)',
-              borderRadius: '10px',
-              padding: '14px',
-              marginBottom: '12px',
-            }}>
+          <div className="flex-1 basis-[320px] max-w-[520px]">
+            <p className="text-sm text-light-gray/70 mb-3">Email</p>
+            <div className="bg-white/15 rounded-[10px] p-3.5 mb-3">
               <input
                 type="email"
                 placeholder="jules@example.com"
-                style={{
-                  width: '100%',
-                  background: 'transparent',
-                  border: 'none',
-                  outline: 'none',
-                  color: '#999',
-                  fontSize: '16px',
-                  fontFamily: 'inherit',
-                  minHeight: '20px',
-                }}
+                className="w-full bg-transparent border-none outline-none text-neutral-400 text-base font-[inherit] min-h-[20px]"
               />
             </div>
-            <button
-              style={{
-                width: '100%',
-                background: '#444',
-                color: '#fff',
-                border: 'none',
-                borderRadius: '10px',
-                padding: '14px',
-                fontSize: '15px',
-                fontWeight: 600,
-                cursor: 'pointer',
-                minHeight: '48px',
-              }}
-            >
+            <Button variant="dark" className="w-full h-12 rounded-[10px] text-sm font-semibold">
               Schedule a call
-            </button>
+            </Button>
           </div>
         </motion.div>
 
         {/* Cal.com Embed */}
-        <div style={{
-          maxWidth: '1000px',
-          margin: '0 auto clamp(3rem, 8vw, 5rem)',
-          background: 'rgba(255,255,255,0.01)',
-          borderRadius: '24px',
-          border: '1px solid var(--border-color)',
-          overflow: 'hidden',
-          minHeight: 'clamp(450px, 80vw, 600px)',
-        }}>
+        <div className="max-w-[1000px] mx-auto mb-[clamp(3rem,8vw,5rem)] bg-white/[0.01] rounded-[24px] border border-white/10 overflow-hidden min-h-[clamp(450px,80vw,600px)]">
           <Cal
             calLink="aaryan-agrawal/30min"
             style={{ width: "100%", height: "100%", minHeight: "clamp(450px, 80vw, 600px)" }}
@@ -128,16 +84,9 @@ export default function Footer() {
         </div>
 
         {/* Footer Content */}
-        <div style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'flex-start',
-          flexWrap: 'wrap',
-          gap: '3rem',
-          marginBottom: '2rem',
-        }}>
-          <div style={{ textAlign: 'right', marginLeft: 'auto' }}>
-            <p style={{ fontSize: '15px', color: 'var(--light-gray)', opacity: 0.6, lineHeight: 1.6 }}>
+        <div className="flex justify-between items-start flex-wrap gap-12 mb-8">
+          <div className="text-right ml-auto">
+            <p className="text-sm text-light-gray/60 leading-relaxed">
               Designed by SF-based roboticists<br />
               For robots out in the field
             </p>
@@ -145,33 +94,26 @@ export default function Footer() {
         </div>
 
         {/* Bottom Section - Logo + Map */}
-        <div style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'flex-end',
-          flexWrap: 'wrap',
-          gap: '3rem',
-          paddingBottom: '2rem',
-        }}>
+        <div className="flex justify-between items-end flex-wrap gap-12 pb-8">
           {/* Left Column */}
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+            <div className="flex items-center gap-2 mb-2">
               <img
                 src="/logo-w-type-dark.png"
                 alt="Farhand Logo"
-                style={{ height: '24px', filter: 'invert(1)', opacity: 0.9 }}
+                className="h-6 invert opacity-90"
               />
             </div>
-            <p style={{ fontSize: '14px', color: 'var(--light-gray)', opacity: 0.6, marginBottom: '1rem' }}>
+            <p className="text-sm text-light-gray/60 mb-4">
               Your field support partner
             </p>
-            <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem' }}>
+            <div className="flex gap-4 mb-4">
               <motion.a
                 whileHover={{ opacity: 0.9 }}
                 href="https://www.linkedin.com/company/farhand-robotics/home"
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ color: 'var(--light-gray)', opacity: 0.8, padding: '10px', margin: '-10px' }}
+                className="text-light-gray/80 p-2.5 -m-2.5"
               >
                 <FaLinkedin size={20} />
               </motion.a>
@@ -179,21 +121,18 @@ export default function Footer() {
           </div>
 
           {/* Right Column - US Map */}
-          <div style={{ maxWidth: '450px', flex: '1 1 300px' }}>
+          <div className="max-w-[450px] flex-1 basis-[300px]">
             <img
               src="/us-map.png"
               alt="US Coverage Map"
-              style={{ width: '100%', height: 'auto' }}
+              className="w-full h-auto"
             />
           </div>
         </div>
 
         {/* Bottom Bar */}
-        <div style={{
-          borderTop: '1px solid var(--border-color)',
-          paddingTop: '1.5rem',
-        }}>
-          <Link href="/terms" style={{ fontSize: '14px', color: 'var(--light-gray)', opacity: 0.6, padding: '8px 0', display: 'inline-block' }}>
+        <div className="border-t border-white/10 pt-6">
+          <Link href="/terms" className="text-sm text-light-gray/60 py-2 inline-block">
             Terms &amp; Privacy
           </Link>
         </div>

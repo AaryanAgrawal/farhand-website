@@ -3,6 +3,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { HelpCircle, Wrench, Infinity } from 'lucide-react';
+import { Card } from '@/components/ui/card';
 
 const steps = [
   { title: "Learns", desc: "your documentation", icon: <HelpCircle size={20} /> },
@@ -12,8 +13,8 @@ const steps = [
 
 export default function Relay() {
   return (
-    <section id="relay" className="section-padding" style={{ background: '#000' }}>
-      <div className="container" style={{ textAlign: 'center' }}>
+    <section id="relay" className="bg-background py-[clamp(3rem,8vw,6rem)]">
+      <div className="container text-center">
 
         {/* Solution Introduction */}
         <motion.div
@@ -21,21 +22,15 @@ export default function Relay() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: [0.19, 1, 0.22, 1] }}
           viewport={{ once: true, margin: "-100px" }}
-          style={{
-            padding: 'clamp(3rem, 8vw, 5rem) clamp(1.5rem, 5vw, 3rem)',
-            border: '1px solid var(--border-color)',
-            borderRadius: '30px',
-            maxWidth: '900px',
-            margin: '0 auto clamp(3rem, 8vw, 5rem)',
-          }}
+          className="py-[clamp(3rem,8vw,5rem)] px-[clamp(1.5rem,5vw,3rem)] border border-white/10 rounded-[30px] max-w-[900px] mx-auto mb-[clamp(3rem,8vw,5rem)]"
         >
-          <p style={{ fontSize: 'clamp(16px, 2vw, 18px)', color: 'var(--light-gray)', marginBottom: '1.5rem', fontWeight: 400, opacity: 0.9 }}>
+          <p className="text-base md:text-lg text-light-gray/90 mb-6 font-normal">
             There&apos;s a better model
           </p>
-          <h3 style={{ maxWidth: '750px', margin: '0 auto 1.5rem', fontWeight: 300, lineHeight: 1.45 }}>
+          <h3 className="max-w-[750px] mx-auto mb-6 font-light leading-[1.45]">
             <strong>On-demand technicians guided by AI to service your machines like your own guys</strong>
           </h3>
-          <p style={{ fontSize: 'clamp(16px, 2vw, 18px)', color: 'var(--light-gray)', opacity: 0.8 }}>
+          <p className="text-base md:text-lg text-light-gray/80">
             Every zip code in the US
           </p>
         </motion.div>
@@ -47,14 +42,14 @@ export default function Relay() {
           transition={{ duration: 1.2 }}
           viewport={{ once: true }}
         >
-          <h3 style={{ fontSize: 'clamp(28px, 5vw, 34px)', marginBottom: '0.5rem', fontWeight: 300 }}>
+          <h3 className="text-[clamp(28px,5vw,34px)] mb-2 font-light">
             Farhand <strong>Relay</strong>&#8482;
           </h3>
-          <p style={{ fontSize: 'clamp(16px, 2vw, 18px)', fontWeight: 400, color: 'var(--light-gray)', marginBottom: 'clamp(2rem, 6vw, 3rem)', opacity: 0.8 }}>
+          <p className="text-base md:text-lg font-normal text-light-gray/80 mb-[clamp(2rem,6vw,3rem)]">
             <strong>Our AI platform that becomes your senior technician.</strong>
           </p>
 
-          <div className="grid-3" style={{ maxWidth: '1000px', margin: '0 auto' }}>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 max-w-[1000px] mx-auto">
             {steps.map((step, i) => (
               <motion.div
                 key={i}
@@ -62,34 +57,18 @@ export default function Relay() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.2, duration: 1, ease: [0.19, 1, 0.22, 1] }}
                 viewport={{ once: true }}
-                className="card-glass"
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'flex-start',
-                  minHeight: '160px',
-                  textAlign: 'left',
-                }}
               >
-                <div style={{
-                  width: '40px',
-                  height: '40px',
-                  borderRadius: '50%',
-                  border: '1px solid var(--accent-green)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: 'var(--accent-green)',
-                  marginBottom: '1.5rem',
-                }}>
-                  {step.icon}
-                </div>
-                <p style={{ fontSize: 'clamp(20px, 3vw, 22px)', fontWeight: 500, color: 'var(--foreground)', marginBottom: '0.5rem' }}>
-                  {step.title}
-                </p>
-                <p style={{ fontSize: 'clamp(16px, 2vw, 18px)', color: 'var(--light-gray)', margin: 0, lineHeight: 1.5, opacity: 0.9 }}>
-                  {step.desc}
-                </p>
+                <Card className="flex flex-col justify-start min-h-[160px] text-left">
+                  <div className="w-10 h-10 rounded-full border border-accent flex items-center justify-center text-accent mb-6">
+                    {step.icon}
+                  </div>
+                  <p className="text-xl md:text-[22px] font-medium text-foreground mb-2">
+                    {step.title}
+                  </p>
+                  <p className="text-base md:text-lg text-light-gray/90 m-0 leading-relaxed">
+                    {step.desc}
+                  </p>
+                </Card>
               </motion.div>
             ))}
           </div>

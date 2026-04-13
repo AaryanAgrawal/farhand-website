@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { Button } from '@/components/ui/button';
 
 export default function Hero() {
   const { scrollY } = useScroll();
@@ -9,49 +10,25 @@ export default function Hero() {
   const opacity = useTransform(scrollY, [0, 400], [1, 0]);
 
   return (
-    <section
-      style={{
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: '0',
-        textAlign: 'center',
-        position: 'relative',
-        overflow: 'hidden',
-        background: '#000',
-      }}
-    >
+    <section className="min-h-screen flex flex-col justify-center items-center p-0 text-center relative overflow-hidden bg-background">
       {/* Video Background */}
       <video
         autoPlay
         muted
         loop
         playsInline
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-          opacity: 1,
-          zIndex: 0,
-        }}
+        className="absolute inset-0 w-full h-full object-cover opacity-100 z-0"
       >
         <source src="/Farhand website.mp4" type="video/mp4" />
       </video>
 
       {/* Content Overlay */}
-      <div className="container" style={{ zIndex: 1, position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <div className="container z-[1] relative flex flex-col items-center">
         <motion.div style={{ y: y1, opacity }} transition={{ duration: 1, ease: [0.19, 1, 0.22, 1] }}>
-          <h1 style={{
-            marginBottom: '1.5rem',
-            maxWidth: '1000px',
-            textShadow: '0 4px 30px rgba(0,0,0,0.9)',
-            fontWeight: 400,
-          }}>
+          <h1
+            className="mb-6 max-w-[1000px]"
+            style={{ textShadow: '0 4px 30px rgba(0,0,0,0.9)', fontWeight: 400 }}
+          >
             Your field service partner
           </h1>
         </motion.div>
@@ -60,28 +37,21 @@ export default function Hero() {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.3, duration: 1 }}
-          style={{
-            maxWidth: '850px',
-            marginBottom: '3rem',
-            textShadow: '0 4px 20px rgba(0,0,0,0.8)',
-            color: 'var(--light-gray)',
-            fontWeight: 400,
-          }}
+          className="max-w-[850px] mb-12 text-light-gray font-normal"
+          style={{ textShadow: '0 4px 20px rgba(0,0,0,0.8)' }}
         >
           Our AI-guided technicians install & service your robots & machinery at your client sites.
         </motion.h2>
 
-        <motion.a
-          href="#schedule"
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.8 }}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.98 }}
-          className="btn-primary"
         >
-          Deploy smarter
-        </motion.a>
+          <Button asChild size="lg">
+            <a href="#schedule">Deploy smarter</a>
+          </Button>
+        </motion.div>
       </div>
     </section>
   );
