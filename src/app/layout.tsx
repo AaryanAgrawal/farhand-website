@@ -58,7 +58,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${dmSans.variable} ${serifDisplay.variable} ${inter.variable}`}>
       <head>
         <meta name="facebook-domain-verification" content="nfla0sjkkzg556b9nwgktdftfas5gk" />
         {/* Google Search Console — paste verification code here after signup */}
@@ -131,7 +131,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${dmSans.variable} ${serifDisplay.variable} ${inter.variable}`}>
+      <body>
         {children}
         <SpeedInsights />
         <Analytics />
