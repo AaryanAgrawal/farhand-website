@@ -115,21 +115,6 @@ export default function RootLayout({
             })
           }}
         />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                var s = document.createElement('script');
-                s.setAttribute('nowprocket', '');
-                s.setAttribute('nitro-exclude', '');
-                s.src = 'https://dashboard.searchatlas.com/scripts/dynamic_optimization.js';
-                s.dataset.uuid = 'c3ddc202-592a-4afa-b651-4fdef43e7e20';
-                s.id = 'sa-dynamic-optimization-loader';
-                document.head.appendChild(s);
-              })();
-            `
-          }}
-        />
       </head>
       <body>
         {children}
