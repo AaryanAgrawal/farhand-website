@@ -10,7 +10,7 @@ export default function Navigation() {
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 1, ease: [0.19, 1, 0.22, 1] }}
-      className="fixed top-0 left-0 right-0 z-[100] py-5 bg-black/85 backdrop-blur-md"
+      className="fixed top-0 left-0 right-0 z-[100] py-5 bg-black/20 backdrop-blur-2xl backdrop-saturate-150 border-b border-white/[0.06]"
     >
       <div className="container flex justify-between items-center">
         <Link href="/" className="flex items-center min-h-[44px]">
