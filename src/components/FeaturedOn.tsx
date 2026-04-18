@@ -30,7 +30,7 @@ export default function FeaturedOn({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.6 }}
-          className="text-light-gray/70 text-sm tracking-[0.2em] uppercase mb-8 md:mb-10"
+          className="text-light-gray/70 text-sm tracking-[0.2em] uppercase mb-4 md:mb-5"
         >
           {label}
         </motion.p>

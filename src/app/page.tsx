@@ -17,11 +17,11 @@ export default function Home() {
       <Hero />
       <FeaturedOn
         logos={[
-          { src: '/press/arm-institute.svg', alt: 'ARM Institute', height: 72 },
+          { src: '/press/arm-institute.svg', alt: 'ARM Institute', height: 44 },
           {
             src: '/press/field-service-next-west.png',
             alt: 'Field Service Next West',
-            height: 64,
+            height: 44,
             filter: 'brightness(0) invert(1)',
           },
         ]}
