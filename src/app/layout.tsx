@@ -60,6 +60,8 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${dmSans.variable} ${serifDisplay.variable} ${inter.variable}`}>
       <head>
+        <meta name="theme-color" content="#000000" />
+        <meta name="color-scheme" content="dark" />
         <meta name="facebook-domain-verification" content="nfla0sjkkzg556b9nwgktdftfas5gk" />
         {/* Google Search Console — paste verification code here after signup */}
         {process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION && (
