@@ -2,14 +2,13 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'For Robotics Labs',
+  title: 'For Robotics Frontier Labs',
   description:
-    'Farhand is the applications arm for robotics foundation-model labs. Run by roboticists. Nationwide technician network. We fill every gap around your model.',
+    'Farhand is the applications arm for robotics frontier labs. We learn from you and help apply your models at scale.',
   alternates: { canonical: '/for/robotics-labs' },
   openGraph: {
-    title: 'An applications arm for robotics foundation-model labs',
-    description:
-      'We learn from you. Then we fill every gap around your model.',
+    title: 'An applications arm for robotics frontier labs',
+    description: 'We learn from you and help apply your models at scale.',
     url: 'https://farhand.live/for/robotics-labs',
     siteName: 'Farhand',
     type: 'article',
@@ -18,17 +17,13 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'An applications arm for robotics foundation-model labs',
-    description: 'We learn from you. Then we fill every gap around your model.',
+    title: 'An applications arm for robotics frontier labs',
+    description: 'We learn from you and help apply your models at scale.',
   },
 };
 
-const SECTION_MARK =
-  'text-accent text-[10px] md:text-xs tracking-[0.22em] uppercase mb-3 md:mb-4';
-
-// Subtle paper-grain background as an inline SVG data URI (no extra file).
 const PAPER_GRAIN_SVG =
-  "data:image/svg+xml;utf8," +
+  'data:image/svg+xml;utf8,' +
   encodeURIComponent(
     `<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'>
       <filter id='n'>
@@ -39,10 +34,47 @@ const PAPER_GRAIN_SVG =
     </svg>`
   );
 
+type PillarProps = {
+  title: string;
+  body: string;
+  href?: string;
+};
+
+function Pillar({ title, body, href }: PillarProps) {
+  const inner = (
+    <>
+      <h3
+        className="mb-2 text-foreground"
+        style={{ fontSize: 'clamp(1.05rem, 2.2vw, 1.2rem)', fontWeight: 500 }}
+      >
+        {title}
+        {href && <span className="text-accent ml-1.5 text-sm">↗</span>}
+      </h3>
+      <p
+        className="text-light-gray leading-snug text-sm md:text-base m-0"
+        style={{ fontFamily: 'var(--font-serif)' }}
+      >
+        {body}
+      </p>
+    </>
+  );
+
+  if (href) {
+    return (
+      <Link
+        href={href}
+        className="block hover:opacity-80 transition-opacity"
+      >
+        {inner}
+      </Link>
+    );
+  }
+  return <div>{inner}</div>;
+}
+
 export default function RoboticsLabsPage() {
   return (
     <main className="bg-background min-h-screen relative">
-      {/* Paper-grain overlay */}
       <div
         aria-hidden="true"
         className="pointer-events-none fixed inset-0 z-0"
@@ -54,216 +86,154 @@ export default function RoboticsLabsPage() {
         }}
       />
 
-      {/* Drop-cap styling scoped to first letter inside data-dropcap */}
       <style>{`
         [data-dropcap]::first-letter {
           font-family: var(--font-serif);
-          font-style: italic;
-          font-weight: 400;
-          font-size: 4.2em;
+          font-style: normal;
+          font-weight: 500;
+          font-size: 3.2em;
           float: left;
-          line-height: 0.9;
-          padding-right: 0.08em;
-          padding-top: 0.05em;
+          line-height: 0.95;
+          padding-right: 0.12em;
+          padding-top: 0.1em;
           color: var(--color-foreground);
         }
       `}</style>
 
       <div className="relative z-10">
         {/* Header */}
-        <header className="py-8 px-6">
+        <header className="py-4 md:py-5 px-6">
           <div className="container max-w-[900px] flex items-center justify-between">
             <Link href="/" className="inline-block">
-              <p className="text-accent font-medium text-sm tracking-[0.15em] uppercase">
+              <p className="text-accent font-medium text-sm tracking-[0.15em]">
                 Farhand
               </p>
             </Link>
-            <p className="text-light-gray/60 text-xs md:text-sm tracking-[0.22em] uppercase">
+            <p className="text-light-gray/60 text-xs md:text-sm tracking-[0.22em]">
               April 2026
             </p>
           </div>
         </header>
 
         {/* Hero */}
-        <section className="pt-10 md:pt-16 pb-10 md:pb-14">
+        <section className="pt-4 md:pt-8 pb-3 md:pb-6">
           <div className="container max-w-[900px]">
-            <div className="w-24 h-px bg-border mb-10 md:mb-12" aria-hidden="true" />
+            <div className="w-24 h-px bg-border mb-4 md:mb-6" aria-hidden="true" />
             <h1
-              className="mb-6 max-w-[820px]"
+              className="mb-3 max-w-[780px]"
               style={{
                 fontFamily: 'var(--font-serif)',
                 fontStyle: 'italic',
                 fontWeight: 400,
-                letterSpacing: '-0.025em',
+                letterSpacing: '-0.02em',
+                fontSize: 'clamp(1.85rem, 5vw, 44px)',
+                lineHeight: 1.15,
               }}
             >
-              An applications arm for robotics foundation-model labs.
+              An applications arm for robotics frontier labs.
             </h1>
             <p
-              className="text-light-gray/70 text-base md:text-lg mb-8"
+              className="text-light-gray/70 text-sm md:text-base mb-4"
               style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic' }}
             >
               by Aaryan Agrawal · Farhand
             </p>
             <h2
-              className="max-w-[760px] font-normal"
-              style={{ fontFamily: 'var(--font-serif)' }}
+              className="max-w-[720px] font-normal"
+              style={{
+                fontFamily: 'var(--font-serif)',
+                fontSize: 'clamp(1.1rem, 2.3vw, 1.4rem)',
+                lineHeight: 1.4,
+              }}
             >
-              We learn from you. Then we fill every gap around your model.
+              We learn from you and help apply your models at scale.
             </h2>
           </div>
         </section>
 
-        {/* Letter body */}
-        <section className="pb-14 md:pb-20">
+        {/* Letter body — one tight paragraph */}
+        <section className="pb-6 md:pb-10">
           <div className="container max-w-[900px]">
             <p
               data-dropcap
-              className="text-light-gray leading-[1.75] text-lg md:text-xl mb-6 max-w-[720px]"
-              style={{ fontFamily: 'var(--font-serif)' }}
+              className="text-light-gray text-base md:text-lg max-w-[720px] m-0"
+              style={{ fontFamily: 'var(--font-serif)', lineHeight: 1.6 }}
             >
-              We&apos;ve been watching what teams like yours are building. The models are getting real. The hard part moves outward — to hardware you don&apos;t own, integrations you don&apos;t want to write, and service calls at 2 a.m. in an Ohio factory.
-            </p>
-            <p
-              className="text-light-gray leading-[1.75] text-lg md:text-xl max-w-[720px]"
-              style={{ fontFamily: 'var(--font-serif)' }}
-            >
-              We&apos;d like to be the company that handles all of that, for you — under your guidance. We already do it for robot and machine OEMs in every US zip code. We&apos;d like to do it for foundation-model labs next.
+              The models are getting real. The hard part moves outward — to hardware, integrations, and service calls you don&apos;t want to own. We&apos;d like to handle it all. Under your guidance.
             </p>
           </div>
         </section>
 
         {/* Three pillars */}
-        <section className="pb-14 md:pb-20 border-t border-border pt-14 md:pt-20">
+        <section className="py-6 md:py-10 border-t border-border">
           <div className="container max-w-[900px]">
-            <p className={SECTION_MARK}>§ I.</p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12">
-              <div>
-                <h3
-                  className="mb-3 text-foreground"
-                  style={{ fontSize: 'clamp(1.15rem, 2.5vw, 1.35rem)', fontWeight: 500 }}
-                >
-                  Built by roboticists.
-                </h3>
-                <p
-                  className="text-light-gray leading-relaxed"
-                  style={{ fontFamily: 'var(--font-serif)' }}
-                >
-                  Your model is the instrument. We&apos;re the hands.
-                </p>
-              </div>
-              <div>
-                <h3
-                  className="mb-3 text-foreground"
-                  style={{ fontSize: 'clamp(1.15rem, 2.5vw, 1.35rem)', fontWeight: 500 }}
-                >
-                  Nationwide tech network.
-                </h3>
-                <p
-                  className="text-light-gray leading-relaxed"
-                  style={{ fontFamily: 'var(--font-serif)' }}
-                >
-                  1,700+ techs across every US zip code — already deploying and servicing robots.
-                </p>
-              </div>
-              <div>
-                <h3
-                  className="mb-3 text-foreground"
-                  style={{ fontSize: 'clamp(1.15rem, 2.5vw, 1.35rem)', fontWeight: 500 }}
-                >
-                  Tools built around you.
-                </h3>
-                <p
-                  className="text-light-gray leading-relaxed"
-                  style={{ fontFamily: 'var(--font-serif)' }}
-                >
-                  Task editors, teleop capture, eval harnesses, rollout and rollback — calibrated to your stack.
-                </p>
-              </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8">
+              <Pillar
+                title="Built by roboticists."
+                body="Your model is the instrument. We're the hands."
+              />
+              <Pillar
+                title="Nationwide tech network."
+                body="2,100+ techs in every US zip code."
+                href="/"
+              />
+              <Pillar
+                title="Tools built around you."
+                body="Learns your robots. Guides your techs. Every call logs back."
+                href="/relay"
+              />
             </div>
-          </div>
-        </section>
-
-        {/* What we take off your plate */}
-        <section className="pb-14 md:pb-20 border-t border-border pt-14 md:pt-20">
-          <div className="container max-w-[900px]">
-            <p className={SECTION_MARK}>§ II.</p>
-            <h3
-              className="mb-8 text-foreground"
-              style={{ fontWeight: 300, fontSize: 'clamp(1.4rem, 3vw, 1.875rem)' }}
-            >
-              What we take off your plate.
-            </h3>
-            <ul className="space-y-3 max-w-[720px]" style={{ fontFamily: 'var(--font-serif)' }}>
-              <li className="text-light-gray leading-relaxed">
-                <span className="text-foreground">Hardware</span> — bring-up, integration, retrofits, safety.
-              </li>
-              <li className="text-light-gray leading-relaxed">
-                <span className="text-foreground">Software</span> — deployment stack, eval harnesses, observability.
-              </li>
-              <li className="text-light-gray leading-relaxed">
-                <span className="text-foreground">Installation</span> — on-site commissioning.
-              </li>
-              <li className="text-light-gray leading-relaxed">
-                <span className="text-foreground">Service</span> — maintenance, escalations, field response.
-              </li>
-              <li className="text-light-gray leading-relaxed">
-                <span className="text-foreground">Data</span> — in-the-wild collection, under your guidance.
-              </li>
-            </ul>
           </div>
         </section>
 
         {/* Closing + signature */}
-        <section className="pb-16 md:pb-24 border-t border-border pt-14 md:pt-20">
+        <section className="py-6 md:py-10 border-t border-border">
           <div className="container max-w-[900px]">
-            <p className={SECTION_MARK}>§ III.</p>
             <p
-              className="text-light-gray leading-[1.75] text-lg md:text-xl mb-6 max-w-[720px]"
-              style={{ fontFamily: 'var(--font-serif)' }}
+              className="text-light-gray text-base md:text-lg mb-4 max-w-[720px]"
+              style={{ fontFamily: 'var(--font-serif)', lineHeight: 1.6 }}
             >
-              If any of this is interesting, write to me. No pitch deck, no partner tiers — just a conversation.
-            </p>
-            <p
-              className="text-light-gray leading-[1.75] text-lg md:text-xl mb-12 max-w-[720px]"
-              style={{ fontFamily: 'var(--font-serif)' }}
-            >
+              If any of this is interesting,{' '}
               <a
                 href="mailto:aaryan@farhand.live?subject=Farhand%20%C2%B7%20Applications%20arm%20for%20robotics%20labs"
                 className="text-accent"
               >
-                aaryan@farhand.live
+                drop your email here
               </a>
+              .
             </p>
 
-            <div className="mt-8">
+            <div className="mt-4">
               <img
                 src="/aaryan-signature.svg"
                 alt="Aaryan Agrawal"
-                className="h-20 md:h-24 w-auto mb-4"
+                className="h-12 md:h-16 w-auto mb-3"
               />
-              <p className="text-foreground font-normal m-0">Aaryan Agrawal</p>
-              <p className="text-light-gray text-sm m-0">Founder, Farhand · April 2026</p>
+              <p className="text-foreground font-normal m-0 text-sm md:text-base">
+                Aaryan Agrawal
+              </p>
+              <p className="text-light-gray text-xs md:text-sm m-0">
+                Founder, Farhand · April 2026
+              </p>
             </div>
 
             {/* Footnote */}
-            <div className="mt-16 md:mt-20 pt-6 border-t border-border max-w-[720px]">
+            <div className="mt-6 md:mt-10 pt-4 border-t border-border max-w-[720px]">
               <p
-                className="text-xs text-light-gray/55 leading-relaxed"
+                className="text-xs text-light-gray/55 leading-relaxed m-0"
                 style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic' }}
               >
                 <sup className="mr-1">1</sup>
-                Farhand — SF-based, field service for robots. Nationwide technicians and AI tooling.
-                Written for BD and applications teams at foundation-model labs.
+                Farhand — SF-based, field service for robots. Nationwide technicians and AI tooling. Written for BD and applications teams at frontier labs.
               </p>
             </div>
           </div>
         </section>
 
         {/* Minimal footer */}
-        <footer className="py-10 px-6 border-t border-border">
-          <div className="container max-w-[900px] flex flex-col sm:flex-row justify-between items-start gap-4">
-            <p className="text-light-gray/60 text-xs tracking-[0.22em] uppercase">
+        <footer className="py-5 px-6 border-t border-border">
+          <div className="container max-w-[900px] flex flex-col sm:flex-row justify-between items-start gap-3">
+            <p className="text-light-gray/60 text-xs tracking-[0.22em]">
               Farhand · April 2026
             </p>
             <div className="text-xs text-light-gray/60 text-left sm:text-right space-x-3">

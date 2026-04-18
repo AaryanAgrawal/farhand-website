@@ -41,9 +41,8 @@ export default function RelayPage() {
           >
             Your senior engineer, on every robot.
           </h1>
-          <p className="text-light-gray text-lg md:text-xl leading-relaxed max-w-[720px] mx-auto">
-            Your tribal knowledge → an AI agent. <span className="text-foreground">One per customer.</span>{' '}
-            It guides every repair, SSHs into your robots, and logs every action.
+          <p className="text-light-gray text-lg md:text-xl leading-relaxed max-w-[760px] mx-auto">
+            Learns your machines. Guides your techs. Handles the comms. Plugs into your robots and observability stack to diagnose and run commands. Every call logs back — so service stays repeatable and your docs keep improving.
           </p>
         </div>
       </section>

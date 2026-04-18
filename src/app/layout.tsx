@@ -25,7 +25,7 @@ const serifDisplay = Fraunces({
 
 export const metadata: Metadata = {
   title: {
-    default: "FARHAND | Your field service partner",
+    default: "Farhand | Your field service partner",
     template: "%s | Farhand",
   },
   description: "AI-guided technicians install & service your robots & machinery at your client sites. On-demand field service across every zip code in the US.",

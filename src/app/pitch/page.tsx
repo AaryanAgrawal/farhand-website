@@ -18,7 +18,7 @@ export default function PitchPage() {
       {/* Minimal header — no full nav, just logo */}
       <header className="py-8 px-6">
         <div className="container max-w-[900px]">
-          <p className="text-accent font-medium text-sm tracking-wider uppercase">Farhand</p>
+          <p className="text-accent font-medium text-sm tracking-wider">Farhand</p>
         </div>
       </header>
 
