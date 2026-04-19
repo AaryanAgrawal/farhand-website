@@ -38,7 +38,7 @@ export default function Hero() {
               letterSpacing: '-0.025em',
             }}
           >
-            Your field ops team
+            Your field service partner
           </h1>
         </motion.div>
 

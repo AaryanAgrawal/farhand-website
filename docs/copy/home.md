@@ -13,14 +13,14 @@ Source-of-truth for everything the homepage says. Sections are in scroll order. 
 ## 1. Navigation
 **Source:** `src/components/Navigation.tsx`
 
-Farhand (logo) · For · **Schedule**
+Farhand (logo) · **Schedule**
 
 ---
 
 ## 2. Hero
 **Source:** `src/components/Hero.tsx`
 
-- Headline (serif italic): `Your field ops team`
+- Headline (serif italic): `Your field service partner`
 - Subhead: `Our AI-guided service engineers install & service your robots & machinery at your client sites.`
 - CTA: `Deploy smarter`
 

@@ -13,7 +13,7 @@ export interface FAQItem {
 export const coreFaqs: FAQItem[] = [
   {
     q: 'How does AI-guided field service work?',
-    a: 'You upload your documentation — manuals, SOPs, wiring diagrams, error codes, firmware changelogs. Our Relay platform loads the full manual into context. When a technician arrives, they have AI-powered step-by-step guidance specific to your machine, its history, and its current state. No chunking. No retrieval errors. No missed context.',
+    a: 'Every Field Service Engineer who shows up performs like your best senior expert on your machine. They know your equipment, your process, and your history before they arrive — so calls close faster, first-time-fix rates go up, and your docs keep improving with every visit.',
   },
   {
     q: 'What types of machines do you service?',
