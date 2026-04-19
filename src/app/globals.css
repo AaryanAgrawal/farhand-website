@@ -44,15 +44,21 @@
   --border-color: rgba(255, 255, 255, 0.08);
 }
 
+/* Root background — ensures scroll overflow + overscroll bounce stays dark */
+html {
+  background-color: #000000;
+}
+
 @layer base {
   html, body {
-    background-color: var(--color-background);
+    background-color: #000000;
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
     width: 100vw;
+    overscroll-behavior-y: none;
   }
 
   a {

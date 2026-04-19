@@ -25,7 +25,7 @@ const serifDisplay = Fraunces({
 
 export const metadata: Metadata = {
   title: {
-    default: "FARHAND | Your field service partner",
+    default: "Farhand | Your field service partner",
     template: "%s | Farhand",
   },
   description: "AI-guided technicians install & service your robots & machinery at your client sites. On-demand field service across every zip code in the US.",
@@ -60,6 +60,8 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${dmSans.variable} ${serifDisplay.variable} ${inter.variable}`}>
       <head>
+        <meta name="theme-color" content="#000000" />
+        <meta name="color-scheme" content="dark" />
         <meta name="facebook-domain-verification" content="nfla0sjkkzg556b9nwgktdftfas5gk" />
         {/* Google Search Console — paste verification code here after signup */}
         {process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION && (
