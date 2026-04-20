@@ -36,45 +36,44 @@ export default function CoverageMap() {
       className="bg-background py-16 md:py-24 border-t border-border overflow-hidden"
     >
       <div className="container">
-        <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-10 md:gap-16 items-center max-w-[1200px] mx-auto">
-          {/* Stat */}
+        <div className="grid grid-cols-1 md:grid-cols-[260px_1fr] lg:grid-cols-[300px_1fr] gap-10 md:gap-16 items-center max-w-[1200px] mx-auto">
+          {/* Stat — fixed column so count-up doesn't reflow the map */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.8 }}
-            className="text-center md:text-left md:pl-4 lg:pl-8 shrink-0"
+            className="text-center md:text-left md:pl-4 lg:pl-8"
           >
             <div
-              className="text-accent font-light tracking-tight leading-none"
+              className="text-accent font-light tracking-tight leading-none tabular-nums"
               style={{
-                fontSize: 'clamp(4rem, 12vw, 7.5rem)',
+                fontSize: 'clamp(2.75rem, 7vw, 5rem)',
                 fontFeatureSettings: '"tnum"',
               }}
             >
               {count.toLocaleString('en-US')}+
             </div>
             <div className="mt-3 md:mt-4 text-light-gray text-sm md:text-base uppercase tracking-[0.15em]">
-              Field techs
+              Field Service Engineers
               <br />
               across the US
             </div>
           </motion.div>
 
-          {/* Map — static US outline */}
+          {/* Map — world coverage */}
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 1, delay: 0.2 }}
             className="relative w-full"
-            style={{ aspectRatio: '959 / 593' }}
+            style={{ aspectRatio: '1024 / 722' }}
           >
             <img
-              src="/us-outline.svg"
-              alt="US coverage map"
+              src="/world-map.avif"
+              alt="World coverage map"
               className="absolute inset-0 w-full h-full object-contain"
-              style={{ filter: 'invert(1) opacity(0.35)' }}
             />
           </motion.div>
         </div>

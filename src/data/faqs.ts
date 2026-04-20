@@ -13,30 +13,30 @@ export interface FAQItem {
 export const coreFaqs: FAQItem[] = [
   {
     q: 'How does AI-guided field service work?',
-    a: 'Every Field Service Engineer who shows up performs like your best senior expert on your machine. They know your equipment, your process, and your history before they arrive — so calls close faster, first-time-fix rates go up, and your docs keep improving with every visit.',
+    a: 'Every Field Service Engineer performs like your best senior expert. Knows your machine. Knows your process. Knows the history. Calls close faster. First-time-fix rates up.',
   },
   {
     q: 'What types of machines do you service?',
-    a: 'Robots (collaborative, industrial, autonomous mobile), industrial machinery, medical equipment, precision instruments, and aviation ground equipment. Our AI adapts to any machine with service documentation — we scope to your specific model.',
+    a: 'Robots. Industrial machinery. Medical equipment. Precision instruments. Aviation ground gear. Anything with service docs.',
   },
   {
     q: 'What areas do you cover?',
-    a: 'Every zip code in the United States. We dispatch on-demand technicians nationwide, all guided by the same AI platform so service quality is consistent from coast to coast.',
+    a: 'Every US zip code. Same AI platform coast to coast. Same service quality everywhere.',
   },
   {
     q: 'How fast can you respond to an issue?',
-    a: 'Remote triage begins immediately — 1 in 3 service queries can be resolved without sending anyone. For issues that need boots on the ground, we dispatch same-day for critical problems.',
+    a: 'Remote triage starts immediately. 1 in 3 issues resolved without anyone onsite. Same-day dispatch when needed.',
   },
   {
     q: 'How is this different from a staffing agency or OEM service contract?',
-    a: 'Staffing sends bodies. OEM contracts are slow and expensive. We send AI-guided technicians who arrive knowing your machine — your full documentation loaded into AI, so every tech performs like your best senior expert. No long-term contracts required.',
+    a: 'Staffing sends bodies. OEMs are slow and expensive. We send Field Service Engineers who arrive knowing your machine. No long-term contracts.',
   },
   {
     q: 'Is my documentation secure?',
-    a: 'Yes. Your documentation stays private and is scoped only to your equipment — never shared with a generic database or other customers. Full audit trails on every service event.',
+    a: 'Yes. Private and scoped to your equipment. Never shared. Full audit trails on every call.',
   },
   {
     q: 'How do I get started and what does it cost?',
-    a: 'Schedule a call with our team. Share your equipment documentation and we set up your Relay instance in days, not months. Pricing varies by volume and equipment complexity — most companies find it cheaper than building an internal service team or relying on OEM contracts.',
+    a: 'Book a call. Share your docs. Relay set up in days. Pricing by volume — typically cheaper than internal team or OEM contracts.',
   },
 ];
