@@ -9,7 +9,14 @@ export const metadata: Metadata = {
 
 export default function ConnectPage() {
   return (
-    <main className="bg-background min-h-screen flex items-center justify-center px-6 py-16">
+    <main className="bg-background min-h-screen flex items-center justify-center px-6 py-16 relative">
+      {/* Subtle back-to-home link */}
+      <a
+        href="/"
+        className="absolute top-6 left-6 text-accent font-medium text-sm tracking-wider hover:opacity-80 transition-opacity"
+      >
+        Farhand
+      </a>
       <div className="container max-w-[480px] text-center">
         {/* Avatar placeholder */}
         <div className="w-24 h-24 rounded-full border-2 border-accent mx-auto mb-6 flex items-center justify-center text-accent text-3xl font-serif">
