@@ -15,10 +15,15 @@ export const metadata: Metadata = {
 export default function PitchPage() {
   return (
     <main className="bg-background min-h-screen">
-      {/* Minimal header — no full nav, just logo */}
+      {/* Minimal header — no full nav, just logo linking home */}
       <header className="py-8 px-6">
         <div className="container max-w-[900px]">
-          <p className="text-accent font-medium text-sm tracking-wider">Farhand</p>
+          <a
+            href="/"
+            className="text-accent font-medium text-sm tracking-wider hover:opacity-80 transition-opacity"
+          >
+            Farhand
+          </a>
         </div>
       </header>
 
