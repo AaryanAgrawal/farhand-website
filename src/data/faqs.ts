@@ -21,7 +21,7 @@ export const coreFaqs: FAQItem[] = [
   },
   {
     q: 'What areas do you cover?',
-    a: 'Every US zip code. Technicians available within a short drive. Same service quality everywhere.',
+    a: 'Every US zip code. Service Engineers available within a short drive. Same service quality everywhere.',
   },
   {
     q: 'How fast can you respond to an issue?',

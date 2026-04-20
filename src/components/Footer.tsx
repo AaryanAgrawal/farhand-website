@@ -119,11 +119,21 @@ export default function Footer() {
         </motion.div>
 
         {/* Cal.com Embed */}
-        <div className="max-w-[1000px] mx-auto mb-12 md:mb-16 lg:mb-20 rounded-[24px] overflow-hidden" style={{ height: 'clamp(620px, 80vh, 780px)' }}>
+        <div
+          className="max-w-[1000px] mx-auto mb-12 md:mb-16 lg:mb-20 rounded-[24px] overflow-hidden relative bg-background"
+          style={{ height: 'clamp(640px, 82vh, 820px)' }}
+        >
+          {/* Loading placeholder — hidden once Cal renders over it */}
+          <div
+            aria-hidden
+            className="absolute inset-0 flex items-center justify-center text-light-gray/40 text-sm pointer-events-none"
+          >
+            Loading scheduler…
+          </div>
           <Cal
             calLink="aaryan-agrawal/30min"
-            style={{ width: '100%', height: '100%' }}
-            config={{ layout: 'month_view', theme: 'dark' }}
+            style={{ width: '100%', height: '100%', position: 'relative', zIndex: 1 }}
+            config={{ theme: 'dark' }}
           />
         </div>
 
