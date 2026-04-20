@@ -44,11 +44,9 @@ Headline:
 > **Don't run it on last-gen ops.** *(second line in red `#ff3b3b`)*
 
 Cards *(red outline, shuffle responsive)*:
-1. Travelling or regional technicians don't scale
+1. Travelling or regional Field Service Engineers don't scale
 2. Outsourced service contracts are expensive and poor quality
 3. Only your senior engineer knows some procedures
-
-> **Note:** card #1 still says "technicians" — rest of the site uses "Field Service Engineers." Let me know if you want this flipped.
 
 ---
 
