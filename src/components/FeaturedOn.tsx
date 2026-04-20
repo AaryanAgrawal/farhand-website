@@ -24,7 +24,7 @@ export default function FeaturedOn({
   return (
     <section
       aria-label={label}
-      className="bg-background py-12 md:py-16 border-t border-border"
+      className="bg-background py-12 md:py-16"
     >
       <div className="container max-w-[900px] text-center">
         <motion.p
