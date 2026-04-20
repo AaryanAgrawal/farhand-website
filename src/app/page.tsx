@@ -39,7 +39,7 @@ export default function Home() {
       <RelayCards />
 
       {/* Signature tagline — sits above FAQ */}
-      <section className="bg-background py-8 md:py-10 border-t border-border">
+      <section className="bg-background py-8 md:py-10">
         <div className="container text-center">
           <p className="text-sm md:text-base text-light-gray/70 leading-relaxed">
             Designed by SF-based roboticists
