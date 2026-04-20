@@ -110,7 +110,7 @@ export default function UISandbox() {
         </div>
         <FeatureGrid
           title="Farhand Relay™"
-          subtitle="Our AI platform that becomes your senior Field Service Engineer."
+          subtitle="Our AI platform that becomes your senior engineer."
           features={[
             { title: 'Learns', desc: 'your documentation', icon: <HelpCircle size={20} /> },
             { title: 'Guides', desc: 'Field Service Engineers during repairs', icon: <Wrench size={20} /> },

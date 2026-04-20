@@ -25,7 +25,7 @@ export default function RelayPage() {
       <Navigation />
 
       {/* Hero */}
-      <section className="pt-32 md:pt-40 pb-12 md:pb-16">
+      <section className="pt-24 md:pt-40 pb-10 md:pb-16">
         <div className="container text-center max-w-[900px]">
           <p className="text-accent text-sm tracking-[0.2em] uppercase mb-5">
             AI Platform
@@ -58,7 +58,7 @@ export default function RelayPage() {
       <RelayCapabilities />
 
       {/* Three differentiators */}
-      <section className="py-20 md:py-28 border-t border-border">
+      <section className="py-14 md:py-20">
         <div className="container max-w-[1100px]">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12">
             <div>
@@ -96,7 +96,7 @@ export default function RelayPage() {
       </section>
 
       {/* Data & Security */}
-      <section className="py-16 md:py-20 border-t border-border">
+      <section className="py-12 md:py-16">
         <div className="container max-w-[900px] text-center">
           <div className="inline-flex items-center gap-2 text-accent text-sm tracking-[0.2em] uppercase mb-5">
             <span aria-hidden="true">🛡</span> Data &amp; Security
@@ -112,7 +112,7 @@ export default function RelayPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 md:py-28 border-t border-border">
+      <section className="py-14 md:py-20">
         <div className="container max-w-[820px] text-center">
           <h2 className="mb-6 font-light">
             See Relay on <em className="text-accent italic not-italic">your</em> documentation.
@@ -120,13 +120,14 @@ export default function RelayPage() {
           <p className="text-light-gray text-base md:text-lg mb-10 max-w-[600px] mx-auto">
             15-minute call. Upload your docs. We&apos;ll show you the agent.
           </p>
-          <a
-            href="/#schedule"
+          <button
+            data-cal-link="aaryan-agrawal/30min"
+            data-cal-config='{"theme":"dark","layout":"month_view"}'
             className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-accent text-background font-semibold text-base md:text-lg hover:opacity-90 transition-opacity"
           >
-            Schedule a call
+            Book a 30-min call
             <span aria-hidden="true">→</span>
-          </a>
+          </button>
         </div>
       </section>
 

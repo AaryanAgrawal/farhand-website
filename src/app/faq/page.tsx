@@ -38,7 +38,7 @@ const faqs = [
   },
   {
     q: "What is Farhand Relay?",
-    a: "Relay is our AI platform that becomes your senior Field Service Engineer. It learns your documentation, guides Field Service Engineers during repairs, and improves by text and voice debriefs. Full manual loaded into context — no chunking, no retrieval errors, no missed context.",
+    a: "Relay is our AI platform that becomes your senior engineer. It learns your documentation, guides Field Service Engineers during repairs, and improves by text and voice debriefs. Full manual loaded into context — no chunking, no retrieval errors, no missed context.",
   },
   {
     q: "Can I use Relay for my own internal team?",
