@@ -47,6 +47,7 @@
 /* Root background — ensures scroll overflow + overscroll bounce stays dark */
 html {
   background-color: #000000;
+  overscroll-behavior-y: none;
 }
 
 @layer base {
@@ -56,9 +57,10 @@ html {
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
-    width: 100vw;
-    overscroll-behavior-y: none;
+  }
+
+  body {
+    overflow-x: clip;
   }
 
   a {
