@@ -107,7 +107,7 @@ Questions *(edit Q + A here; I'll sync `src/data/faqs.ts`)*:
    **A:** Robots and Automation Systems. Industrial machinery. Medical equipment. Precision instruments. Consumer Equipment.
  
 3. **Q:** What areas do you cover?
-   **A:** Every US zip code. Technicians available within a short drive. Same service quality everywhere.
+   **A:** Every US zip code. Service Engineers available within a short drive. Same service quality everywhere.
 
 4. **Q:** How fast can you respond to an issue?
    **A:** Remote triage starts immediately. 1 in 3 issues resolved without anyone onsite. Same-day dispatch when needed.
