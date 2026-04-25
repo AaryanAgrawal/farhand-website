@@ -91,7 +91,7 @@ _Running log. Every new inbound link to `farhand.live` lands here with date, sou
 | **Lighthouse CI** | ✅ | Weekly Monday, files GitHub issue on regression |
 | **Scheduled blog agent** | ✅ | Weekly Monday 9am PT, writes + commits + pushes a new post |
 | **Scheduled page expansion** | ✅ | Monthly 1st, adds 10 cities (+70 programmatic pages) |
-| **Scheduled competitor scan** | ✅ | Weekly Thursday 10am PT, writes report to `reports/` |
+| **Scheduled competitor scan** | ✅ | Weekly Thursday 10am PT, writes findings to Notion (Outbound Engine page); agent lives in `farhand-gtm` |
 | **Apollo enrichment** | ⚠️ stubbed | Code ready, needs `APOLLO_API_KEY` env var |
 | **IPinfo reverse IP** | ⚠️ stubbed | Code ready, needs `IPINFO_TOKEN` env var |
 | **LinkedIn Insight Tag** | ⚠️ stubbed | Code ready, needs `NEXT_PUBLIC_LINKEDIN_PARTNER_ID` |
@@ -213,7 +213,7 @@ Managed at: https://claude.ai/code/scheduled
 |---|---|---|---|
 | Weekly Blog Post | `0 16 * * 1` | Mon 9am PT | Picks uncovered topic from 15-item pool, writes 1200-1800 word post, commits + pushes |
 | Monthly Page Expansion | `0 17 1 * *` | 1st of month 10am PT | Adds 10 new cities to `src/data/cities.ts` (+70 programmatic pages), commits + pushes |
-| Weekly Competitor + Keyword Scan | `0 17 * * 4` | Thu 10am PT | Checks Roboworx/Reliance/Formic/Path/Rapid blogs, identifies keyword gaps, writes report to `reports/` |
+| Weekly Competitor + Keyword Scan | `0 17 * * 4` | Thu 10am PT | Checks Roboworx/Reliance/Formic/Path/Rapid blogs, identifies keyword gaps, writes findings to Notion (Outbound Engine page) — agent lives in `farhand-gtm` |
 
 ### GitHub Actions workflows
 | Workflow | Trigger | What it does |
