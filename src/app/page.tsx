@@ -2,10 +2,9 @@ import type { Metadata } from 'next';
 import Navigation from '@/components/Navigation';
 import Hero from '@/components/Hero';
 import FeaturedOn from '@/components/FeaturedOn';
-import CoverageMap from '@/components/CoverageMap';
 import Problem from '@/components/Problem';
 import Resolution from '@/components/Resolution';
-import { RelayIntro, RelayCards } from '@/components/Relay';
+import Proof from '@/components/Proof';
 import FAQSection from '@/components/FAQSection';
 import Footer from '@/components/Footer';
 import { coreFaqs } from '@/data/faqs';
@@ -48,11 +47,7 @@ export default function Home() {
 
       <Resolution />
 
-      <CoverageMap />
-
-      <RelayIntro />
-
-      <RelayCards />
+      <Proof />
 
       {/* Signature tagline — sits above FAQ */}
       <section className="bg-background py-8 md:py-10">
