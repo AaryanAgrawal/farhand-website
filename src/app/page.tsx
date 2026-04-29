@@ -4,7 +4,7 @@ import Hero from '@/components/Hero';
 import FeaturedOn from '@/components/FeaturedOn';
 import CoverageMap from '@/components/CoverageMap';
 import Problem from '@/components/Problem';
-import SkillsCollage from '@/components/SkillsCollage';
+import Resolution from '@/components/Resolution';
 import { RelayIntro, RelayCards } from '@/components/Relay';
 import FAQSection from '@/components/FAQSection';
 import Footer from '@/components/Footer';
@@ -46,7 +46,7 @@ export default function Home() {
         <Problem />
       </div>
 
-      <SkillsCollage />
+      <Resolution />
 
       <CoverageMap />
 
