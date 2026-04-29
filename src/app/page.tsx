@@ -6,6 +6,7 @@ import Problem from '@/components/Problem';
 import Resolution from '@/components/Resolution';
 import Proof from '@/components/Proof';
 import HowItRuns from '@/components/HowItRuns';
+import FinalCTA from '@/components/FinalCTA';
 import FAQSection from '@/components/FAQSection';
 import Footer from '@/components/Footer';
 import { coreFaqs } from '@/data/faqs';
@@ -52,18 +53,7 @@ export default function Home() {
 
       <HowItRuns />
 
-      {/* Signature tagline — sits above FAQ */}
-      <section className="bg-background py-8 md:py-10">
-        <div className="container text-center">
-          <p className="text-sm md:text-base text-light-gray/70 leading-relaxed">
-            Designed by SF-based roboticists
-            <br />
-            For the robots of{' '}
-            <span className="line-through opacity-50">tomorrow</span>{' '}
-            <span className="text-accent">today</span>
-          </p>
-        </div>
-      </section>
+      <FinalCTA />
 
       <FAQSection
         faqs={coreFaqs}
