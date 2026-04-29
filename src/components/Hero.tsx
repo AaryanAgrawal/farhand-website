@@ -41,7 +41,7 @@ export default function Hero() {
               letterSpacing: '-0.025em',
             }}
           >
-            Your field service partner
+            Your white-labelled service partner
           </h1>
         </motion.div>
 
@@ -52,16 +52,20 @@ export default function Hero() {
           className="max-w-[850px] mb-8 md:mb-12 text-light-gray font-normal"
           style={{ textShadow: '0 4px 20px rgba(0,0,0,0.8)' }}
         >
-          Our AI-guided service engineers install & service your robots & machinery at your client sites.
+          We install & repair your robots on your client sites. So you can scale revenue and focus on R&amp;D.
         </motion.h2>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.8 }}
+          className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-center justify-center"
         >
           <Button asChild size="lg">
-            <a href="#schedule">Deploy smarter</a>
+            <a href="#schedule">Schedule a call</a>
+          </Button>
+          <Button asChild size="lg" variant="ghost">
+            <a href="#proof">See how it works</a>
           </Button>
         </motion.div>
       </div>
