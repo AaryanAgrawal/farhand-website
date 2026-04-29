@@ -89,9 +89,9 @@ The current line is mechanism + about-us in one breath. The hero should be one s
 
 Two CTAs side by side: **Schedule a call** (primary) + **See how it works** (anchors to Beat 4 / Beat 5).
 
-### Beat 2 — Tension (rewrite of "Problem")
+### Beat 2 — Tension (rewrite of "Problem") **LOCKED — shipped 2026-04-29**
 
-Today: 3 outcome stat boxes (was 3 red "challenges" cards before that). Both miss the beat — we don't need stats here, we need the visitor to nod at the problem.
+Today: flyer's "You are a robotics company…" quote block. Three large lines, no grid, italic green "Let us help." closer. Implementation in `src/components/Problem.tsx`.
 
 Direction: one paragraph (60–80 words) that names the three failure modes of today's industrial service. Below it, a single transitional line. No grid, no boxes.
 
