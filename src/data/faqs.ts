@@ -1,12 +1,8 @@
 /**
  * Shared FAQ data for the Farhand website.
- * Used on homepage, blog index, and /faq page (which has its own
- * extended 12-question list).
+ * Used on homepage, blog index, and /faq page.
  *
- * Keep this array tight — only the most pre-booking-relevant
- * questions. Coverage / machine types / "how do I get started" are
- * answered by the homepage flow (Resolution, Proof, Final CTA), so
- * they don't earn a spot in the FAQ.
+ * Only the most conversion-relevant questions — the ones buyers actually ask.
  */
 
 export interface FAQItem {
@@ -18,6 +14,14 @@ export const coreFaqs: FAQItem[] = [
   {
     q: 'How does AI-guided field service work?',
     a: 'Every Field Service Engineer performs like your senior engineer. Knows your machine. Knows your process. Knows the history. Calls close faster. First-time-fix rates up.',
+  },
+  {
+    q: 'What types of machines do you service?',
+    a: 'Robots and Automation Systems. Industrial machinery. Medical equipment. Precision instruments. Consumer Equipment.',
+  },
+  {
+    q: 'What areas do you cover?',
+    a: 'Every US zip code. Service Engineers available within a short drive. Same service quality everywhere.',
   },
   {
     q: 'How fast can you respond to an issue?',
@@ -34,5 +38,9 @@ export const coreFaqs: FAQItem[] = [
   {
     q: 'Is my documentation secure?',
     a: 'Yes. Private and scoped to your equipment. Never shared. Full audit trails on every call.',
+  },
+  {
+    q: 'How do I get started?',
+    a: 'Book a call. We take two weeks to onboard our AI and show you how it works. Then you pay only for usage!',
   },
 ];

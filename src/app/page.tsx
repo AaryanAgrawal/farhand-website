@@ -2,11 +2,9 @@ import type { Metadata } from 'next';
 import Navigation from '@/components/Navigation';
 import Hero from '@/components/Hero';
 import FeaturedOn from '@/components/FeaturedOn';
+import CoverageMap from '@/components/CoverageMap';
 import Problem from '@/components/Problem';
-import Resolution from '@/components/Resolution';
-import Proof from '@/components/Proof';
-import HowItRuns from '@/components/HowItRuns';
-import FinalCTA from '@/components/FinalCTA';
+import { RelayIntro, RelayCards } from '@/components/Relay';
 import FAQSection from '@/components/FAQSection';
 import Footer from '@/components/Footer';
 import { coreFaqs } from '@/data/faqs';
@@ -47,13 +45,24 @@ export default function Home() {
         <Problem />
       </div>
 
-      <Resolution />
+      <RelayIntro />
 
-      <Proof />
+      <CoverageMap />
 
-      <HowItRuns />
+      <RelayCards />
 
-      <FinalCTA />
+      {/* Signature tagline — sits above FAQ */}
+      <section className="bg-background py-8 md:py-10">
+        <div className="container text-center">
+          <p className="text-sm md:text-base text-light-gray/70 leading-relaxed">
+            Designed by SF-based roboticists
+            <br />
+            For the robots of{' '}
+            <span className="line-through opacity-50">tomorrow</span>{' '}
+            <span className="text-accent">today</span>
+          </p>
+        </div>
+      </section>
 
       <FAQSection
         faqs={coreFaqs}

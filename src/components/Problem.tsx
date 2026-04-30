@@ -2,55 +2,47 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Card } from '@/components/ui/card';
 
-const ease = [0.19, 1, 0.22, 1] as const;
-
-const lineClass =
-  'text-3xl md:text-5xl lg:text-6xl font-light leading-tight m-0';
+const problems = [
+  "Travelling or regional Field Service Engineers don't scale",
+  "Outsourced service contracts are expensive and poor quality",
+  "Only your senior engineer knows some procedures",
+];
 
 export default function Problem() {
   return (
-    <section className="bg-background py-16 md:py-24 lg:py-32">
-      <div className="container max-w-[900px]">
-        <motion.p
+    <section className="bg-background py-10 md:py-16 lg:py-24">
+      <div className="container text-center">
+        <motion.h4
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease }}
-          viewport={{ once: true, margin: '-80px' }}
-          className={lineClass}
+          transition={{ duration: 1, ease: [0.19, 1, 0.22, 1] }}
+          viewport={{ once: true, margin: "-100px" }}
+          className="mb-8 md:mb-20 lg:mb-24"
+          style={{ lineHeight: 1.3, fontWeight: 400 }}
         >
-          <strong className="font-medium text-foreground">
-            You are a robotics company,
-          </strong>
-          <span className="text-light-gray/80"> not a service company.</span>
-        </motion.p>
+          You&apos;ve built a next-gen machine. <br />
+          <span style={{ color: '#ff3b3b' }}>Don&apos;t run it on last-gen ops.</span>
+        </motion.h4>
 
-        <motion.p
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.15, duration: 1, ease }}
-          viewport={{ once: true, margin: '-80px' }}
-          className={`${lineClass} mt-6 md:mt-10`}
-        >
-          <strong className="font-medium text-foreground">
-            Your customers need support
-          </strong>
-          <span className="text-light-gray/80">
-            {' '}
-            but you can&apos;t be everywhere.
-          </span>
-        </motion.p>
-
-        <motion.p
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 1, ease }}
-          viewport={{ once: true, margin: '-80px' }}
-          className={`${lineClass} italic text-accent mt-8 md:mt-12`}
-          style={{ fontFamily: 'var(--font-serif)' }}
-        >
-          Let us help.
-        </motion.p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 max-w-[1000px] mx-auto">
+          {problems.map((text, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.15, duration: 0.8, ease: [0.19, 1, 0.22, 1] }}
+              viewport={{ once: true, margin: "-50px" }}
+            >
+              <Card className="flex items-center justify-center text-center min-h-[140px] border border-[#ff3b3b]/50 hover:border-[#ff3b3b]/70">
+                <p className="text-xl md:text-2xl font-medium text-foreground m-0 leading-snug">
+                  {text}
+                </p>
+              </Card>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );

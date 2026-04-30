@@ -2,7 +2,7 @@
 
 Living planning doc for the Farhand homepage. Edit in place. No code changes happen until a section here is marked **LOCKED**.
 
-_Last updated: 2026-04-29. All seven beats shipped — see commits 1ce2d2d…75f226d._
+_Last updated: 2026-04-29. Live website is reverted to the pre-rewrite state. The flyer-voice rewrite below is **the design we're workshopping** — copy captured here verbatim from the reverted commits so we can iterate on words before re-implementing._
 
 ---
 
@@ -19,7 +19,7 @@ Every section either reinforces the operational claim or the strategic claim. Se
 ## Audience
 
 Primary visitor: someone with a robot or industrial-machinery uptime problem they can't fix fast enough on their own.
-- **OEM** — robot/equipment manufacturer whose customer is asking for service their team can't deliver.
+- **OEM** — robot/equipment manufacturer whose customer is asking for service their team can't deliver. (Primary ICP, per the marketing flyer.)
 - **Fleet operator** — runs robots across many sites, drowning in truck rolls.
 - **Facilities / plant manager** — has a machine down, no in-house FSE on shift.
 
@@ -43,142 +43,142 @@ A homepage is a five-beat argument, not a list of features. Each beat earns the 
 | **4. Proof** | Make the resolution credible | "These guys can actually do this." |
 | **5. Action** | Make the next step obvious | "I'll book the call." |
 
-Beat 4 is where most B2B sites flame out — they list features instead of giving evidence. We have to be specific: numbers, coverage map, named customers, the AI demo.
-
 ---
 
 ## Section flow, mapped to the arc
 
-The page is a single document. Sections aren't islands — each one hands off to the next.
-
-| # | Beat | Section | Hands off with… |
-|---|---|---|---|
-| 1 | Hook | **Hero** — single sharp claim + CTA | "…and here's why it's the only model that scales:" |
-| 2 | Tension | **The status quo is breaking** — one paragraph naming the three failure modes (travelling FSEs, OEM contracts, staffing firms) | "…and here's the alternative we built:" |
-| 3 | Resolution | **What Farhand actually is** — one sentence ("AI-guided FSEs, on-demand, every US zip code") + 3-tile feature panel showing the mechanism | "…and here's how it shows up in practice:" |
-| 4 | Proof | **Proof block** — interleaves four kinds of evidence: scale (`41,000+` zips + map), speed (`<48hr` over the map), pricing (`$0 retainers`), system (Relay does X, Y, Z with a screenshot or diagram) | "…here's how a job actually runs:" |
-| 5 | Proof | **How a job runs** — 5-tile horizontal timeline: Call → Match → Dispatch → Resolve → Debrief | "…ready to see it for yourself?" |
-| 6 | Action | **Final CTA block** — confident one-liner + two buttons (Schedule a call · See coverage) | — |
-| 7 | (residual) | **FAQ** | objection cleanup, post-conviction |
-| 8 | (residual) | **Footer** | secondary nav, contact |
-
-Things this re-org changes vs. today:
-
-- **The "challenges" framing comes back, but as one-paragraph tension** — not three red-bordered cards. It earns the resolution; it isn't a stat block of its own.
-- **Outcome stats stop being a section.** They become evidence inside the Proof block, paired with the visual that makes them credible (stat over coverage map, stat next to pricing, stat next to timeline).
-- **Skill pills go away from the homepage.** Move the full taxonomy to `/services`. Homepage answers "what we do" with one sentence + 3-4 mechanism tiles, not 27 pills.
-- **Relay collapses into the Proof block** instead of being its own multi-section detour. One panel, one diagram or screenshot, three captions.
-- **A real Final CTA block** appears before the FAQ, not after.
+```
+1. Navigation
+2. Hero            ← Beat 1 (Hook) — flyer headline + sub
+3. FeaturedOn      ← keep (press strip — answers "are they legit?")
+4. Tension         ← Beat 2 — flyer's "You are a robotics company…" quote block
+5. Resolution      ← Beat 3 — one-sentence + 3 mechanism tiles + robot-type strip
+6. Proof           ← Beat 4 — single block, 3 panels: Map+stat / Speed / Relay
+7. HowItRuns       ← Beat 5 — 5-tile timeline
+8. FinalCTA        ← Beat 6 — pre-footer block
+9. FAQ             ← trim 8 → 5
+10. Footer         ← keep
+```
 
 ---
 
-## Section drafts
+## Shipped copy (workshop these)
 
-### Beat 1 — Hero (rewrite)
+Below is the verbatim copy from the now-reverted commits. Edit freely — when we re-implement, we pull from this doc.
 
-Today: *"Your field service partner / Our AI-guided service engineers install & service your robots & machinery at your client sites."*
+### Beat 1 — Hero
 
-The current line is mechanism + about-us in one breath. The hero should be one sentence that lands the message and one sub-line that gives the visitor a stake. Direction options (pick one — TBD):
+- **H1** (italic serif): _Your white-labelled service partner_
+- **Sub**: We install & repair your robots on your client sites. So you can scale revenue and focus on R&D.
+- **CTAs**: `Schedule a call` (primary, green) · `See how it works` (ghost) → `#proof`
 
-- **Outcome-led:** "Your machines stay up. Anywhere in the US. By tomorrow."
-  *Sub:* "AI-guided field service engineers — per-job, no retainers."
-- **Tension-led:** "When your robot stops, the clock starts. We stop it — anywhere in the US, by tomorrow."
-  *Sub:* "On-demand FSEs, guided by AI that knows your machine."
-- **Status-quo-vs-us-led:** "Stop flying engineers. Start dispatching them."
-  *Sub:* "AI-guided FSEs in every US zip code. Per-job, no retainers, no contracts."
+### Beat 2 — Tension
 
-Two CTAs side by side: **Schedule a call** (primary) + **See how it works** (anchors to Beat 4 / Beat 5).
+Three large lines, no grid, no boxes. Bold leader + light tail on lines 1 and 2; italic green serif on the closer.
 
-### Beat 2 — Tension (rewrite of "Problem") **LOCKED — shipped 2026-04-29**
+- **You are a robotics company,** not a service company.
+- **Your customers need support** but you can't be everywhere.
+- _Let us help._ (italic, accent-green, serif)
 
-Today: flyer's "You are a robotics company…" quote block. Three large lines, no grid, italic green "Let us help." closer. Implementation in `src/components/Problem.tsx`.
+### Beat 3 — Resolution
 
-Direction: one paragraph (60–80 words) that names the three failure modes of today's industrial service. Below it, a single transitional line. No grid, no boxes.
+- **One-sentence definition** (centered, large):
+  > Farhand is your **white-labelled service partner**. On-site field service engineers, nationwide. Remote technical support. So you scale revenue and focus on R&D.
 
-Draft:
-> Today you have three options. Travelling FSEs don't scale past one region. OEM service contracts cost more than the machine and still leave you waiting weeks. Staffing firms send anyone with a wrench. None of it was designed for the moment American factories are in — robots arriving faster than the people who can service them.
+- **Robot-type strip** (one row, dot-separated, accent-green):
+  > AMRs · AGVs · Cobots · Robotic Arms · ASRS
 
-That paragraph earns the line that follows: *"So we built a fourth option."*
+- **Three mechanism tiles** (equal weight, no numbering):
+  - **The technicians** — Vetted, insured, in every US zip code.
+  - **The AI (Relay)** — Learns your docs and SOPs. Guides each visit. Improves with every job.
+  - **The economics** — Per job. No retainers. No minimums.
 
-### Beat 3 — What Farhand actually is (consolidates current "what we do" + "Relay")
+- **Link out** (small, light-gray):
+  > Servicing every major robot brand and most industrial machinery. [See the full taxonomy →]
 
-Today: pill collage (overdense) + RelayIntro + RelayCards (split across two sections, both abstract).
+### Beat 4 — Proof
 
-Direction: one block with three pieces, top to bottom:
+Single section, three vertically-stacked panels under `id="proof"`.
 
-1. One-sentence definition. *"Farhand is an AI-guided field-service network. We dispatch certified technicians anywhere in the US, guided in real time by an AI that knows your machine inside out."*
-2. Three mechanism tiles, equal weight, no "1/2/3" numbering:
-   - **The technicians** — "Vetted, insured, in every US zip code."
-   - **The AI (Relay)** — "Learns your docs and SOPs. Guides each visit. Improves with every job."
-   - **The price** — "Per job. No retainers. No minimums."
-3. One-line link out: *"We service every major robot brand and most industrial machinery. See the full taxonomy →"*
+- **Panel 1 — Scale.** Big number `2,100+` (count-up animation) anchored to the existing US coverage map. Sub-line: _robot service engineers nationwide._
+- **Panel 2 — Speed.** Big number `<48hr` (no graphic in v1). Sub-line: _average dispatch-to-site. Closest-hub dispatch. No regional waitlists._
+- **Panel 3 — System.** Bordered card.
+  - Header: _Farhand **Relay**™ — the AI guiding every visit._
+  - Sub-line: _Reads your docs. Walks the tech through diagnostics. Learns from every debrief._
+  - Three icon-bullets: **Learns** (your docs and architecture) · **Guides** (engineers during service) · **Improves** (your SOPs iteratively)
 
-(This kills the pill collage on the homepage. The taxonomy lives on `/services`.)
+### Beat 5 — How a job runs
 
-### Beat 4 — Proof (new structure, replaces today's stat boxes + coverage + Relay)
+Section title: _How a job runs_. Five tiles in a row, each with an icon, a 01–05 numeral, a one-word title, and one sentence.
 
-Today's mistake: stats live in their own row, the map lives in another row, Relay lives in two more rows. Each piece of evidence stands alone instead of compounding.
+- **01 Call** — Tell us the machine, the site, the urgency.
+- **02 Match** — Closest hub. Right brand certs. Real availability.
+- **03 Dispatch** — FSE on-site within 48 hours. Often same-day in dense markets.
+- **04 Resolve** — AI-guided diagnosis. Real-time remote backup.
+- **05 Debrief** — Every fix improves the AI. Your next job is smoother.
 
-Direction: a single Proof block with three sub-panels, each pairing a stat with a visual.
+Closing one-liner under the row:
+> All at a per-job rate. **No retainers, no minimums.**
 
-- **Panel 1 — Scale.** Big number `41,000+` US zips, anchored to the coverage map. Sub-line: *"FSE coverage in every US zip code, day one."*
-- **Panel 2 — Speed.** Big number `<48hr` average dispatch-to-site, anchored to a small timeline graphic or animated dot moving across the map. Sub-line: *"Closest-hub dispatch. No regional waitlists."*
-- **Panel 3 — System.** A screenshot or diagram of Relay (the AI). Big label: *"The AI guiding every visit."* Sub-line: *"Reads your docs. Walks the tech through diagnostics. Learns from every debrief."*
+### Beat 6 — Final CTA
 
-(Pricing — `$0 retainers, $0 minimums, $0 contracts` — moves into Beat 5 to set up the Action.)
+- **Headline** (italic serif, two lines):
+  > Your robots are already deployed.
+  > Get them serviced like it's 2027.
 
-### Beat 5 — How a job runs (new)
+- **CTAs**: `Schedule a call` (primary) · `See coverage` (ghost) → `#proof`
 
-Today: absent.
+- **Epigraph** (small, light-gray):
+  > Built with ❤︎ by ex-roboticists.
 
-Direction: 5-tile horizontal strip with icons and 1-line captions. *Call → Match → Dispatch → Resolve → Debrief.* Final tile says: "And the AI learns from the debrief, so the next job is smoother." The strip ends with a one-line pricing pitch — *"All at a per-job rate. No retainers, no minimums."* — that hands off to the Final CTA.
+### Beat 7 — FAQ (trimmed 8 → 5)
 
-### Beat 6 — Final CTA (new)
+Drop on homepage (covered elsewhere in the flow): _What types of machines do you service?_ (Resolution covers it), _What areas do you cover?_ (Proof covers it), _How do I get started?_ (CTA covers it).
 
-Today: absent. Page goes FAQ → footer with no closer.
+Keep:
+1. How does AI-guided field service work?
+2. How fast can you respond to an issue?
+3. How is this different from a staffing agency or OEM service contract?
+4. How do you price?
+5. Is my documentation secure?
 
-Direction: pre-footer block, full-width, single confident sentence. Two buttons. Same gravitational weight as Roboworx's "Make Service Your New Strategic Weapon."
-
-Draft:
-> **Your robots are already deployed. Get them serviced like it's 2027.**
-> *[ Schedule a call ]   [ See coverage map ]*
-
-### FAQ + Footer
-
-Trim FAQ from 8 to 5 — the most common pre-booking questions only. Everything else lives on `/faq`. Footer stays.
+The full 12-question list stays on `/faq`.
 
 ---
 
-## Things being dropped from the homepage
+## Things being dropped from the homepage (in the rewrite)
 
-- Red-bordered "challenges" cards (gone since 2026-04-28).
-- White-bordered outcome stat boxes (move stats into Proof block).
-- Skill pill collage (move full taxonomy to `/services`, leave one-sentence link from homepage).
-- Standalone "Designed by SF roboticists" row (demote to footer epigraph).
-- Two-section Relay treatment (collapse into Proof Panel 3).
+- Red-bordered "challenges" cards in `Problem.tsx` (currently live again post-revert).
+- The earlier outcome-stat-box layout (`<48hr / 41,000+ / 0`).
+- The 27-pill `SkillsCollage` (overdense). Full taxonomy moves to `/services`.
+- The two-section Relay treatment (RelayIntro + RelayCards). Collapses into Proof Panel 3.
+- The standalone "Designed by SF-based roboticists" tagline row. Job moves into the FinalCTA epigraph.
 
-## Things being added
+## Things being added (in the rewrite)
 
-- One-paragraph **tension** beat (replaces the absence-of-problem we created when we deleted the challenges cards).
-- Single-block **Resolution** with the three mechanism tiles.
+- One-paragraph **Tension** beat using the flyer's quote block.
+- Single-block **Resolution** with the three mechanism tiles + robot-type strip.
 - Compound **Proof block** with stat-paired-with-visual panels.
 - **How a job runs** timeline.
 - **Final CTA** block before the FAQ.
 
 ---
 
-## Open decisions
+## Open decisions (workshop here)
 
-1. **Hero voice** — outcome-led, tension-led, or status-quo-vs-us-led? (See Beat 1.)
-2. **Tension paragraph wording** — does the draft ring true, or is one of those three failure modes wrong/missing?
-3. **Resolution one-sentence definition** — accept draft or rewrite?
-4. **Proof block visuals** — do we have a Relay screenshot/diagram to use? If not, what placeholder?
-5. **Pricing** — publish a per-job rate ($X) on the homepage, or stay vague ("per-job") and put numbers on a `/pricing` page?
-6. **Customer logos** — any named customers we can show in a trust strip? If not, the press strip stays as-is.
-7. **Final CTA copy** — the draft line is a hook; do we want something more measured?
+1. **Hero H1** — _"Your white-labelled service partner"_ (matches flyer back tagline) vs. the original _"Your field service partner"_ (broader)?
+2. **Hero primary CTA** — _"Schedule a call"_ (cleaner, what's used everywhere else) vs. the original _"Deploy smarter"_ (punchier, less direct)?
+3. **Tension closer** — _"Let us help."_ in italic green serif. Strong enough as a closer, or want something more confident?
+4. **Resolution definition** — too long? Currently four sentences. Could compress to two.
+5. **Proof Panel 2 (Speed)** — graphic asset? Currently big-number-only. A small dispatch-timeline graphic or animated dot moving across the map could earn this panel its own visual weight.
+6. **Proof Panel 3 (System)** — Relay screenshot or live demo? The current icon-bullet fallback is fine but a real screenshot would be much stronger.
+7. **HowItRuns step copy** — single-sentence per step. Tight. Anything wrong or missable?
+8. **Final CTA headline** — _"Get them serviced like it's 2027."_ Punchy but maybe gimmicky? Alternative: _"Get them serviced like the robots they are."_
+9. **Pricing on homepage** — kept vague (_"per-job"_, _"no retainers, no minimums"_). Publish a number, or leave a `/pricing` page link to handle this?
+10. **Customer logos** — the rewrite kept the press strip (ARM Institute + Field Service Next West). If we have permission to show 3–6 customer/partner logos that would replace press as the trust strip and would be a real upgrade.
 
 ---
 
 ## Once decisions are made
 
-Mark each beat **LOCKED** in this doc. Then we ship beat by beat, smallest commit first. Beat 2 (Tension paragraph) is the cheapest first ship — it's all in `Problem.tsx`.
+Mark each beat **LOCKED** in this doc. Then we re-ship beat by beat, smallest commit first. The previous shipped sequence (Beat 2 → 1 → 3 → 4 → 5 → 6 → 7) worked fine and can be re-used.
