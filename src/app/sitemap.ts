@@ -17,7 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   // Programmatic SEO: every machine-type x city landing page.
-  // 7 machines x 75 cities = 525 URLs.
+  // 7 machines x 85 cities = 595 URLs.
   const programmaticPages: MetadataRoute.Sitemap = [];
   for (const machine of machineTypes) {
     for (const city of cities) {

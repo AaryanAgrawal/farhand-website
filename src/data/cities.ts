@@ -110,6 +110,18 @@ export const cities: City[] = [
   { name: 'Hartford', state: 'CT', stateName: 'Connecticut', slug: 'hartford', population: 120000, metroArea: 'Greater Hartford aerospace corridor' },
   { name: 'Providence', state: 'RI', stateName: 'Rhode Island', slug: 'providence', population: 190000, metroArea: 'Providence metro' },
   { name: 'Wichita', state: 'KS', stateName: 'Kansas', slug: 'wichita', population: 395000, metroArea: 'Air Capital of the World' },
+
+  // Tier 8 — additional industrial and aerospace hubs
+  { name: 'Colorado Springs', state: 'CO', stateName: 'Colorado', slug: 'colorado-springs', population: 480000, metroArea: 'Pikes Peak aerospace and defense corridor' },
+  { name: 'Greenville', state: 'SC', stateName: 'South Carolina', slug: 'greenville', population: 72000, metroArea: 'Upstate South Carolina BMW manufacturing corridor' },
+  { name: 'Winston-Salem', state: 'NC', stateName: 'North Carolina', slug: 'winston-salem', population: 250000, metroArea: 'Piedmont Triad' },
+  { name: 'Toledo', state: 'OH', stateName: 'Ohio', slug: 'toledo', population: 270000, metroArea: 'Glass City auto and industrial belt' },
+  { name: 'Bakersfield', state: 'CA', stateName: 'California', slug: 'bakersfield', population: 380000, metroArea: 'Central Valley oil and ag hub' },
+  { name: 'Baton Rouge', state: 'LA', stateName: 'Louisiana', slug: 'baton-rouge', population: 225000, metroArea: 'Gulf Coast chemical and petrochemical corridor' },
+  { name: 'Mobile', state: 'AL', stateName: 'Alabama', slug: 'mobile', population: 188000, metroArea: 'Gulf Coast Airbus manufacturing hub' },
+  { name: 'Chesapeake', state: 'VA', stateName: 'Virginia', slug: 'chesapeake', population: 245000, metroArea: 'Hampton Roads' },
+  { name: 'Lincoln', state: 'NE', stateName: 'Nebraska', slug: 'lincoln', population: 295000, metroArea: 'Great Plains ag and tech hub' },
+  { name: 'Anchorage', state: 'AK', stateName: 'Alaska', slug: 'anchorage', population: 290000, metroArea: 'Alaska logistics and energy gateway' },
 ];
 
 /** Lookup a city by its URL slug. Returns `undefined` if not found. */
