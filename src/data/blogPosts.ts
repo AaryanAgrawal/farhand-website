@@ -8,6 +8,13 @@ export type BlogPostMeta = {
 
 export const blogPosts: BlogPostMeta[] = [
   {
+    slug: 'plc-troubleshooting-remote-diagnostics',
+    title: 'PLC Troubleshooting with Remote Diagnostics: Cutting MTTR in Half',
+    excerpt: 'Remote access to Siemens, Rockwell, and Mitsubishi PLCs resolves 30-40% of faults without dispatch. The tools, the triage workflow, and where AI guidance picks up where vendor software stops.',
+    date: '2026-05-04',
+    category: 'Technical',
+  },
+  {
     slug: 'reduce-mttr-industrial-robots',
     title: 'How to Reduce MTTR on Industrial Robots: A Field Service Playbook',
     excerpt: 'MTTR under 4 hours is achievable — most teams are 14 hours away. The four sub-components driving repair time and how top-quartile teams eliminate each one.',
@@ -45,7 +52,7 @@ export const blogPosts: BlogPostMeta[] = [
   {
     slug: 'semiconductor-equipment-field-service-benchmarks',
     title: 'Semiconductor Equipment Field Service: 2026 Benchmarks and the Downtime Economics',
-    excerpt: 'Fab downtime costs hit $3–10M per hour. Service benchmarks for ASML, Applied, Lam, TEL, KLA. Why MTTR under 2 hours is the only number that matters.',
+    excerpt: 'Fab downtime costs hit $3–8–$10M per hour. Service benchmarks for ASML, Applied, Lam, TEL, KLA. Why MTTR under 2 hours is the only number that matters.',
     date: '2026-04-14',
     category: 'Insights',
   },
