@@ -19,7 +19,7 @@ export default function Hero() {
         playsInline
         preload="metadata"
         aria-hidden="true"
-        poster="/opengraph-image"
+        poster="/hero-poster.jpg"
         className="absolute inset-0 w-full h-full object-cover opacity-100 z-0"
       >
         <source src="/Farhand website.mp4" type="video/mp4" />
