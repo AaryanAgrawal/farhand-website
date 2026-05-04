@@ -25,7 +25,7 @@ jobs:
       - name: Fetch live sitemap and extract URLs
         id: urls
         run: |
-          curl -fsSL https://farhand.live/sitemap.xml -o sitemap.xml
+          curl -fsSL https://farhand.ai/sitemap.xml -o sitemap.xml
           grep -oE '<loc>[^<]+</loc>' sitemap.xml | sed -E 's|</?loc>||g' > urls.txt
           echo "count=$(wc -l < urls.txt)" >> "$GITHUB_OUTPUT"
           head -5 urls.txt
@@ -39,7 +39,7 @@ jobs:
           import json, urllib.request, os
 
           key = os.environ["KEY"]
-          host = "farhand.live"
+          host = "farhand.ai"
           with open("urls.txt") as f:
               urls = [u.strip() for u in f if u.strip()]
 

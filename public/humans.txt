@@ -1,0 +1,26 @@
+/* TEAM */
+
+Founder & CEO: Aaryan Agrawal
+Site: https://farhand.ai
+Contact: aaryan [at] farhand.live
+LinkedIn: https://www.linkedin.com/in/aaaryan
+From: San Francisco, US
+
+Co-founder & CTO: Shivaan Sood
+Contact: shivaan [at] farhand.live
+
+Co-founder & CCO: Neil Bajaj
+Contact: neil [at] farhand.live
+
+/* THANKS */
+
+ARM Institute — for early validation
+Field Service Next West — for the platform
+
+/* SITE */
+
+Last update: 2026/05/04
+Standards: HTML5, CSS3, ES2024
+Components: Next.js 16, React 19, Tailwind CSS 4, framer-motion
+Hosting: Vercel
+Language: English
